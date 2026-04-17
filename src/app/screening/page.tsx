@@ -17,6 +17,16 @@ const tests = [
     href: "/screening/lifestyle",
     title: "생활습관 체크",
     desc: "수면/운동/식사/사회활동 등 루틴 점검."
+  },
+  {
+    href: "/screening/cognitive",
+    title: "인지종합검사",
+    desc: "기억력, 주의력, 언어 등 6개 영역 종합 평가 (15문항)."
+  },
+  {
+    href: "/screening/moca",
+    title: "MoCA 스타일 검사",
+    desc: "집행기능, 주의력, 언어 등 다영역 인지 평가 (12문항)."
   }
 ];
 

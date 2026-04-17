@@ -22,6 +22,21 @@ const games = [
     href: "/training/stroop",
     title: "색-단어 과제",
     desc: "단어의 의미가 아니라 ‘글자 색’을 선택하는 집중 훈련."
+  },
+  {
+    href: "/training/memory",
+    title: "숫자기억 (N-Back)",
+    desc: "이전 숫자와 비교하는 작업기억 훈련."
+  },
+  {
+    href: "/training/pattern",
+    title: "패턴매칭",
+    desc: "격자 패턴을 기억하고 재현하는 시공간 훈련."
+  },
+  {
+    href: "/training/word",
+    title: "단어연상",
+    desc: "단어 짝을 기억하는 언어·의미기억 훈련."
   }
 ];
 

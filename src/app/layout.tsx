@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { BottomNav } from "@/components/ui/BottomNav";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -39,10 +40,11 @@ export default function RootLayout({
       <body>
         <div className="min-h-dvh flex flex-col">
           <SiteHeader />
-          <main className="flex-1">
+          <main className="flex-1 pb-20 md:pb-0">
             <div className="mx-auto w-full max-w-6xl px-4 py-8">{children}</div>
           </main>
           <SiteFooter />
+          <BottomNav />
         </div>
       </body>
     </html>

@@ -16,7 +16,7 @@ body {
 
 /* 시니어 가독성: 기본 폰트 크기/줄간격 */
 main {
-  @apply text-[16px] leading-relaxed;
+  @apply text-[18px] leading-relaxed;
 }
 
 /* Accessibility: Focus visibility */
@@ -32,5 +32,16 @@ main {
 /* Responsive readability: Prevent horizontal overflow */
 body {
   @apply overflow-x-hidden;
+}
+
+/* 시니어 친화적: 버튼/링크 최소 크기 (WCAG 2.5.5) */
+button, a, [role="button"] {
+  min-height: 48px;
+  min-width: 48px;
+}
+
+/* 시니어 친화적: 입력 필드 스타일링 */
+input, select, textarea {
+  @apply text-[18px] min-h-[48px] rounded-xl border border-slate-200 px-4 py-3;
 }
 

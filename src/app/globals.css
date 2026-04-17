@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-slate-900;
+}
+
+/* 시니어 가독성: 기본 폰트 크기/줄간격 */
+main {
+  @apply text-[16px] leading-relaxed;
+}
+
+/* Accessibility: Focus visibility */
+:focus-visible {
+  @apply outline-none ring-2 ring-brand-600 ring-offset-2;
+}
+
+/* Sticky header support: Scroll margin for sections with IDs */
+[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Responsive readability: Prevent horizontal overflow */
+body {
+  @apply overflow-x-hidden;
+}
+

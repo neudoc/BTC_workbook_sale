@@ -246,6 +246,70 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Education Courses */}
+      <section className="px-4 py-16 md:py-24">
+        <div className="mx-auto max-w-5xl">
+          <div className="text-center">
+            <p className="text-sm font-medium tracking-widest text-brand-700 uppercase">
+              Education
+            </p>
+            <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
+              전문가 교육과정
+            </h2>
+            <p className="mt-3 text-slate-600">
+              인지학습지도사 양성부터 보호자 교육까지, 체계적인 교육 프로그램을 제공합니다.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                title: "인지학습지도사 기초과정",
+                desc: "뇌건강 기초 이론부터 인지훈련 실습, 프로그램 운영 실무까지 8주 과정",
+                tag: "자격과정",
+                href: "/education/courses/cognitive-instructor-basic",
+              },
+              {
+                title: "인지학습지도사 심화과정",
+                desc: "고급 인지평가, 특수 인지훈련, 기관 운영 실무를 다루는 6주 심화 과정",
+                tag: "자격과정",
+                href: "/education/courses/cognitive-instructor-advanced",
+              },
+              {
+                title: "가족 보호자 교육과정",
+                desc: "치매 가족 보호자를 위한 실용적인 인지케어 교육 4주 과정",
+                tag: "일반과정",
+                href: "/education/courses/family-caregiver",
+              },
+            ].map((course) => (
+              <Link
+                key={course.title}
+                href={course.href}
+                className="group rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:border-brand-200 hover:shadow-lg"
+              >
+                <span className="rounded-full border border-brand-100 bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-900">
+                  {course.tag}
+                </span>
+                <h3 className="mt-4 text-lg font-semibold text-slate-900">{course.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-700">{course.desc}</p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 group-hover:underline">
+                  과정 상세보기 <span aria-hidden="true">→</span>
+                </span>
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link
+              href="/education/courses"
+              className="inline-flex items-center justify-center rounded-full border border-slate-200 px-8 py-3.5 text-base font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+            >
+              전체 교육과정 보기
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Screenshots / Preview */}
       <section className="px-4 py-16 md:py-24">
         <div className="mx-auto max-w-5xl">

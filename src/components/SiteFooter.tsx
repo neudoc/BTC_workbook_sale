@@ -34,6 +34,11 @@ export function SiteFooter() {
                   </Link>
                 </li>
                 <li>
+                  <Link className="hover:underline rounded focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 outline-none" href="/education/courses">
+                    교육과정
+                  </Link>
+                </li>
+                <li>
                   <Link className="hover:underline rounded focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 outline-none" href="/contact">
                     문의하기
                   </Link>

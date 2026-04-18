@@ -1,0 +1,138 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         String   @default("member")
+  phone        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  orders          Order[]
+  trainingRecords TrainingRecord[]
+  screeningResults ScreeningResult[]
+  blogPosts       BlogPost[]
+}
+
+model Product {
+  id              Int      @id @default(autoincrement())
+  slug            String   @unique
+  name            String
+  shortDescription String
+  description     String   @default("")
+  price           Int
+  salePrice       Int?
+  category        String   @default("")
+  stock           Int      @default(0)
+  thumbnailUrl    String?
+  tags            String   @default("")
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  orderItems OrderItem[]
+}
+
+model Order {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  orderNumber   String   @unique
+  totalAmount   Int
+  status        String   @default("pending")
+  recipientName String
+  recipientPhone String
+  address       String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user  User        @relation(fields: [userId], references: [id])
+  items OrderItem[]
+}
+
+model OrderItem {
+  id        Int @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  quantity  Int
+  unitPrice Int
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model BlogPost {
+  id           Int       @id @default(autoincrement())
+  slug         String    @unique
+  title        String
+  excerpt      String
+  content      String
+  category     String
+  tags         String    @default("")
+  authorId     Int
+  thumbnailUrl String?
+  status       String    @default("draft")
+  publishedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  author User @relation(fields: [authorId], references: [id])
+}
+
+model ExpertResource {
+  id          Int      @id @default(autoincrement())
+  title       String
+  category    String
+  description String   @default("")
+  fileUrl     String?
+  content     String?
+  visibility  String   @default("expert_only")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Inquiry {
+  id        Int      @id @default(autoincrement())
+  type      String
+  name      String
+  email     String
+  phone     String   @default("")
+  message   String
+  status    String   @default("pending")
+  answer    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TrainingRecord {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  gameType  String
+  score     Int
+  duration  Int
+  resultJson String?
+  playedAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model ScreeningResult {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  testType     String
+  score        Int
+  level        String
+  resultSummary String
+  resultJson   String?
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}

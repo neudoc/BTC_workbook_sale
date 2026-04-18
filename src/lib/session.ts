@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 export type Role = "member" | "expert_pending" | "expert" | "admin";
 
 export type Session = {
+  id: number;
   name: string;
   email: string;
   role: Role;

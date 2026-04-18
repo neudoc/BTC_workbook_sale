@@ -129,3 +129,29 @@ export const inquiryStorage = {
   }
 };
 
+export type Enrollment = {
+  id: string;
+  createdAt: string;
+  courseId: string;
+  courseTitle: string;
+  buyerName: string;
+  buyerPhone: string;
+  buyerEmail: string;
+  total: number;
+  status: "confirmed" | "pending";
+};
+
+const ENROLLMENT_KEY = "btc_enrollments_v1";
+
+export const enrollmentStorage = {
+  getAll(): Enrollment[] {
+    if (typeof window === "undefined") return [];
+    return safeParse<Enrollment[]>(localStorage.getItem(ENROLLMENT_KEY), []);
+  },
+  add(enrollment: Enrollment) {
+    const all = this.getAll();
+    all.unshift(enrollment);
+    localStorage.setItem(ENROLLMENT_KEY, JSON.stringify(all));
+  }
+};
+

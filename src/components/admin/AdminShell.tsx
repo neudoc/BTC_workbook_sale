@@ -35,12 +35,12 @@ export function AdminShell({
           <div className="hidden md:block" />
 
           <div className="flex items-center gap-4">
-            <span className="text-sm text-slate-600">
+            <span className="text-slate-600">
               {session.name}님
             </span>
             <a
               href="/api/auth/logout"
-              className="inline-flex items-center justify-center rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium hover:bg-slate-50"
+              className="inline-flex items-center justify-center rounded-xl border border-slate-200 px-4 py-2 font-medium hover:bg-slate-50"
             >
               로그아웃
             </a>

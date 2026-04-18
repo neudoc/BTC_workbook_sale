@@ -8,15 +8,16 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: 22px;
 }
 
 body {
   @apply bg-white text-slate-900;
 }
 
-/* 시니어 가독성: 기본 폰트 크기/줄간격 */
+/* 시니어 가독성: 기본 줄간격 */
 main {
-  @apply text-[18px] leading-relaxed;
+  @apply leading-relaxed;
 }
 
 /* Accessibility: Focus visibility */
@@ -42,6 +43,6 @@ button, a, [role="button"] {
 
 /* 시니어 친화적: 입력 필드 스타일링 */
 input, select, textarea {
-  @apply text-[18px] min-h-[48px] rounded-xl border border-slate-200 px-4 py-3;
+  @apply min-h-[48px] rounded-xl border border-slate-200 px-4 py-3;
 }
 

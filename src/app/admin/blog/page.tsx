@@ -170,16 +170,16 @@ export default function BlogPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold">블로그 관리</h1>
           <p className="mt-1 text-slate-600">블로그 글을 작성하고 관리합니다.</p>
         </div>
         <button
           onClick={openCreate}
-          className="inline-flex items-center justify-center rounded-xl bg-brand-700 px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-800"
+          className="inline-flex items-center justify-center rounded-xl bg-brand-700 px-6 py-3 font-semibold text-white hover:bg-brand-800 min-w-[160px]"
         >
-          글 작성
+          + 글 작성
         </button>
       </div>
 
@@ -192,7 +192,7 @@ export default function BlogPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700">
+                <label className="mb-1 block font-medium text-slate-700">
                   제목 *
                 </label>
                 <input
@@ -204,7 +204,7 @@ export default function BlogPage() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700">
+                <label className="mb-1 block font-medium text-slate-700">
                   슬러그 *
                 </label>
                 <input
@@ -282,7 +282,7 @@ export default function BlogPage() {
 
             <div className="grid gap-4 sm:grid-cols-3">
               <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700">
+                <label className="mb-1 block font-medium text-slate-700">
                   카테고리
                 </label>
                 <input
@@ -293,7 +293,7 @@ export default function BlogPage() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700">
+                <label className="mb-1 block font-medium text-slate-700">
                   태그 (쉼표 구분)
                 </label>
                 <input
@@ -304,7 +304,7 @@ export default function BlogPage() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700">
+                <label className="mb-1 block font-medium text-slate-700">
                   상태
                 </label>
                 <select
@@ -321,7 +321,7 @@ export default function BlogPage() {
               <button
                 type="submit"
                 disabled={saving || uploading}
-                className="inline-flex items-center justify-center rounded-xl bg-brand-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-800 disabled:opacity-50"
+                className="inline-flex items-center justify-center rounded-xl bg-brand-700 px-6 py-3 font-semibold text-white hover:bg-brand-800 disabled:opacity-50"
               >
                 {saving ? "저장 중..." : editingId ? "수정" : "작성"}
               </button>
@@ -332,7 +332,7 @@ export default function BlogPage() {
                   setEditingId(null);
                   setForm(EMPTY_FORM);
                 }}
-                className="inline-flex items-center justify-center rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-medium hover:bg-slate-50"
+                className="inline-flex items-center justify-center rounded-xl border border-slate-200 px-6 py-3 font-medium hover:bg-slate-50"
               >
                 취소
               </button>
@@ -344,7 +344,7 @@ export default function BlogPage() {
       {/* Post List */}
       <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full">
             <thead>
               <tr className="border-b border-slate-200 bg-slate-50">
                 <th className="px-4 py-3 text-left font-medium text-slate-600 w-16">이미지</th>
@@ -406,13 +406,13 @@ export default function BlogPage() {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => openEdit(post)}
-                          className="rounded-lg px-3 py-1.5 text-xs font-medium text-brand-700 hover:bg-brand-50"
+                          className="rounded-lg px-4 py-2 font-medium text-brand-700 hover:bg-brand-50"
                         >
                           수정
                         </button>
                         <button
                           onClick={() => handleDelete(post.id)}
-                          className="rounded-lg px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+                          className="rounded-lg px-4 py-2 font-medium text-red-600 hover:bg-red-50"
                         >
                           삭제
                         </button>

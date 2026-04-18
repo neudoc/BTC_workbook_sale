@@ -65,7 +65,7 @@ export function AdminSidebar({
                   <Link
                     href={item.href}
                     onClick={onClose}
-                    className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
+                    className={`flex items-center gap-3 rounded-xl px-3 py-3 font-medium transition-colors ${
                       isActive
                         ? "bg-brand-50 text-brand-800"
                         : "text-slate-700 hover:bg-slate-50"

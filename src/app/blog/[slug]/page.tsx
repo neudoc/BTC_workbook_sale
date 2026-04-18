@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 
@@ -22,6 +23,17 @@ export default async function BlogDetailPage({ params }: { params: { slug: strin
       </div>
 
       <header className="rounded-2xl border border-slate-200 bg-white p-6 space-y-2">
+        {post.thumbnailUrl && (
+          <div className="relative mb-4 h-48 w-full overflow-hidden rounded-xl sm:h-64">
+            <Image
+              src={post.thumbnailUrl}
+              alt={post.title}
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        )}
         <div className="text-sm text-slate-600">{post.category}</div>
         <h1 className="text-2xl font-semibold">{post.title}</h1>
         <div className="text-sm text-slate-600">

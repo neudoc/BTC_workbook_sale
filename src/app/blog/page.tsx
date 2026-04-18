@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { prisma } from "@/lib/prisma";
 import { first } from "@/lib/url";
@@ -66,17 +67,32 @@ export default async function BlogPage({
           <Link
             key={p.id}
             href={`/blog/${p.slug}`}
-            className="rounded-2xl border border-slate-200 bg-white p-6 hover:border-brand-200 hover:bg-brand-50/30 transition-colors"
+            className="group rounded-2xl border border-slate-200 bg-white overflow-hidden hover:border-brand-200 hover:bg-brand-50/30 transition-colors"
           >
-            <div className="flex items-center justify-between gap-3">
-              <div className="text-sm text-slate-600">{p.category}</div>
-              <div className="text-sm text-slate-600">
-                {p.publishedAt ? new Date(p.publishedAt).toLocaleDateString("ko-KR") : ""}
+            <div className="flex">
+              {p.thumbnailUrl && (
+                <div className="relative h-auto w-32 shrink-0 sm:w-40">
+                  <Image
+                    src={p.thumbnailUrl}
+                    alt={p.title}
+                    width={160}
+                    height={120}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              )}
+              <div className="flex-1 p-6">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="text-sm text-slate-600">{p.category}</div>
+                  <div className="text-sm text-slate-600">
+                    {p.publishedAt ? new Date(p.publishedAt).toLocaleDateString("ko-KR") : ""}
+                  </div>
+                </div>
+                <div className="mt-2 text-lg font-semibold">{p.title}</div>
+                <div className="mt-2 text-slate-700">{p.excerpt}</div>
+                <div className="mt-4 text-sm text-brand-800 underline">읽기</div>
               </div>
             </div>
-            <div className="mt-2 text-lg font-semibold">{p.title}</div>
-            <div className="mt-2 text-slate-700">{p.excerpt}</div>
-            <div className="mt-4 text-sm text-brand-800 underline">읽기</div>
           </Link>
         ))}
         {posts.length === 0 ? (

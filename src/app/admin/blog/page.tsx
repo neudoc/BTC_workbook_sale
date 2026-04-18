@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 
 interface BlogPost {
   id: number;
@@ -10,6 +11,7 @@ interface BlogPost {
   content: string;
   category: string;
   tags: string;
+  thumbnailUrl: string | null;
   status: "published" | "draft";
   createdAt: string;
 }
@@ -21,6 +23,7 @@ interface BlogForm {
   content: string;
   category: string;
   tags: string;
+  thumbnailUrl: string;
   status: "published" | "draft";
 }
 
@@ -31,6 +34,7 @@ const EMPTY_FORM: BlogForm = {
   content: "",
   category: "",
   tags: "",
+  thumbnailUrl: "",
   status: "draft",
 };
 
@@ -49,6 +53,8 @@ export default function BlogPage() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [form, setForm] = useState<BlogForm>(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch("/api/admin/blog")
@@ -73,6 +79,7 @@ export default function BlogPage() {
       content: post.content ?? "",
       category: post.category ?? "",
       tags: post.tags ?? "",
+      thumbnailUrl: post.thumbnailUrl ?? "",
       status: post.status,
     });
     setShowForm(true);
@@ -89,6 +96,29 @@ export default function BlogPage() {
           .replace(/\s+/g, "-")
           .replace(/-+/g, "-"),
       }));
+    }
+  }
+
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/upload", { method: "POST", body: fd });
+      if (res.ok) {
+        const data = await res.json();
+        setForm((prev) => ({ ...prev, thumbnailUrl: data.url }));
+      } else {
+        const data = await res.json();
+        alert(data.error || "이미지 업로드에 실패했습니다.");
+      }
+    } catch {
+      alert("이미지 업로드에 실패했습니다.");
+    } finally {
+      setUploading(false);
     }
   }
 
@@ -187,6 +217,43 @@ export default function BlogPage() {
               </div>
             </div>
 
+            {/* Thumbnail Upload */}
+            <div>
+              <label className="mb-1 block text-sm font-medium text-slate-700">
+                대표 이미지
+              </label>
+              <div className="flex items-start gap-4">
+                <div className="flex-1">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/gif,image/webp"
+                    onChange={handleImageUpload}
+                    className="block w-full text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100"
+                  />
+                  <p className="mt-1 text-xs text-slate-500">JPG, PNG, GIF, WebP (최대 5MB)</p>
+                  {uploading && <p className="mt-1 text-sm text-brand-700">업로드 중...</p>}
+                </div>
+                {form.thumbnailUrl && (
+                  <div className="relative h-20 w-28 shrink-0 overflow-hidden rounded-xl border border-slate-200">
+                    <Image
+                      src={form.thumbnailUrl}
+                      alt="썸네일 미리보기"
+                      fill
+                      className="object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setForm((prev) => ({ ...prev, thumbnailUrl: "" }))}
+                      className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white text-xs hover:bg-red-600"
+                    >
+                      x
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
             <div>
               <label className="mb-1 block text-sm font-medium text-slate-700">
                 요약
@@ -253,7 +320,7 @@ export default function BlogPage() {
             <div className="flex gap-3 pt-2">
               <button
                 type="submit"
-                disabled={saving}
+                disabled={saving || uploading}
                 className="inline-flex items-center justify-center rounded-xl bg-brand-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-800 disabled:opacity-50"
               >
                 {saving ? "저장 중..." : editingId ? "수정" : "작성"}
@@ -280,6 +347,7 @@ export default function BlogPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-slate-200 bg-slate-50">
+                <th className="px-4 py-3 text-left font-medium text-slate-600 w-16">이미지</th>
                 <th className="px-4 py-3 text-left font-medium text-slate-600">제목</th>
                 <th className="px-4 py-3 text-left font-medium text-slate-600">카테고리</th>
                 <th className="px-4 py-3 text-center font-medium text-slate-600">상태</th>
@@ -290,13 +358,13 @@ export default function BlogPage() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-slate-500">
+                  <td colSpan={6} className="px-4 py-8 text-center text-slate-500">
                     로딩 중...
                   </td>
                 </tr>
               ) : posts.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-slate-500">
+                  <td colSpan={6} className="px-4 py-8 text-center text-slate-500">
                     등록된 글이 없습니다.
                   </td>
                 </tr>
@@ -306,6 +374,17 @@ export default function BlogPage() {
                     key={post.id}
                     className="border-b border-slate-100 last:border-0 hover:bg-slate-50"
                   >
+                    <td className="px-4 py-3">
+                      {post.thumbnailUrl ? (
+                        <div className="relative h-10 w-14 overflow-hidden rounded-lg">
+                          <Image src={post.thumbnailUrl} alt="" fill className="object-cover" />
+                        </div>
+                      ) : (
+                        <div className="flex h-10 w-14 items-center justify-center rounded-lg bg-slate-100 text-xs text-slate-400">
+                          없음
+                        </div>
+                      )}
+                    </td>
                     <td className="px-4 py-3">
                       <div className="font-medium">{post.title}</div>
                       <div className="text-xs text-slate-500">{post.slug}</div>

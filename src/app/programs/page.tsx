@@ -24,7 +24,7 @@ export default function ProgramsPage() {
         <FeatureCard
           title="교육 프로그램(전문가)"
           description="인지학습 지도사/협력기관을 위한 교육 자료와 운영 도구."
-          href="/expert"
+          href="/education/courses"
         />
         <FeatureCard
           title="기관용(추후 확장)"

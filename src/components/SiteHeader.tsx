@@ -31,6 +31,9 @@ export function SiteHeader() {
           <Link className="hover:underline rounded focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 outline-none" href="/programs">
             프로그램
           </Link>
+          <Link className="hover:underline rounded focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 outline-none" href="/education/courses">
+            교육과정
+          </Link>
           <Link className="hover:underline rounded focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 outline-none" href="/shop">
             쇼핑몰
           </Link>
@@ -61,6 +64,7 @@ export function SiteHeader() {
                 ["/about", "소개"],
                 ["/cognitive-reserve", "인지 예비능"],
                 ["/programs", "프로그램"],
+                ["/education/courses", "교육과정"],
                 ["/shop", "쇼핑몰"],
                 ["/training", "인지훈련"],
                 ["/screening", "자가점검"],

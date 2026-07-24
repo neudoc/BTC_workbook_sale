@@ -48,12 +48,6 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
       </div>
 
       <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-4">
-        <h2 className="text-lg font-semibold">강사 소개</h2>
-        <div className="font-medium">{course.instructor}</div>
-        <div className="text-sm text-slate-700">{course.instructorBio}</div>
-      </div>
-
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-4">
         <h2 className="text-lg font-semibold">커리큘럼</h2>
         <div className="space-y-4">
           {course.modules.map((mod, idx) => (

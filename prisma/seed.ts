@@ -1,8 +1,9 @@
+import "dotenv/config";
 import { hashSync } from "bcryptjs";
 import { PrismaClient } from "../src/generated/prisma/client.js";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaPg } from "@prisma/adapter-pg";
 
-const adapter = new PrismaBetterSqlite3({ url: "file:./dev.db" });
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
@@ -10,87 +11,70 @@ async function main() {
   await prisma.user.upsert({
     where: { email: "admin@btc.kr" },
     update: {},
-    create: {
-      email: "admin@btc.kr",
-      name: "관리자",
-      passwordHash: adminPw,
-      role: "admin"
-    }
+    create: { email: "admin@btc.kr", name: "관리자", passwordHash: adminPw, role: "admin" }
   });
 
   const memberPw = hashSync("member1234", 10);
   await prisma.user.upsert({
     where: { email: "member@test.com" },
     update: {},
-    create: {
-      email: "member@test.com",
-      name: "일반회원",
-      passwordHash: memberPw,
-      role: "member"
-    }
+    create: { email: "member@test.com", name: "일반회원", passwordHash: memberPw, role: "member" }
   });
 
   const expertPw = hashSync("expert1234", 10);
   await prisma.user.upsert({
     where: { email: "expert@test.com" },
     update: {},
-    create: {
-      email: "expert@test.com",
-      name: "전문가",
-      passwordHash: expertPw,
-      role: "expert"
-    }
+    create: { email: "expert@test.com", name: "전문가", passwordHash: expertPw, role: "expert" }
   });
 
-  const products = [
-    {
-      slug: "workbook-basic",
-      name: "인지훈련 워크북 (기초)",
-      shortDescription: "집에서 따라할 수 있는 기초 인지훈련 문제 모음.",
-      description: "기초 수준의 인지훈련 문제를 체계적으로 구성한 워크북입니다. 기억력, 주의집중력, 실행기능 등 다양한 인지 영역을 골고루 훈련할 수 있도록 설계되었습니다.",
-      price: 18000,
-      category: "워크북",
-      stock: 100,
-      tags: "워크북,초급,가정용"
-    },
-    {
-      slug: "workbook-advanced",
-      name: "인지훈련 워크북 (심화)",
-      shortDescription: "조금 더 다양한 난이도의 훈련 문제로 구성.",
-      description: "심화 수준의 인지훈련 문제로 구성된 워크북입니다. 기초 워크북을 마친 분들이 더 높은 난이도로 도전할 수 있도록 설계되었습니다.",
-      price: 22000,
-      category: "워크북",
-      stock: 80,
-      tags: "워크북,중급,가정용"
-    },
-    {
-      slug: "training-cards",
-      name: "인지활동 카드 세트",
-      shortDescription: "대화·회상·주의집중을 돕는 활동 카드 60장.",
-      description: "대화, 회상, 주의집중을 돕는 60장의 활동 카드 세트입니다. 가정이나 기관에서 다양하게 활용할 수 있습니다.",
-      price: 29000,
-      category: "교구",
-      stock: 50,
-      tags: "교구,카드,활동"
-    },
-    {
-      slug: "puzzle-set",
-      name: "두뇌 퍼즐 세트",
-      shortDescription: "공간지각/문제해결을 자극하는 퍼즐 구성(초·중 난이도).",
-      description: "공간지각과 문제해결 능력을 자극하는 퍼즐 세트입니다. 초급과 중급 난이도로 구성되어 있어 단계적으로 도전할 수 있습니다.",
-      price: 26000,
-      category: "교구",
-      stock: 60,
-      tags: "교구,퍼즐"
-    }
+  // BTC 1% 인지학습지 — 레벨(예방/관리/돌봄) × 계절(봄·여름·가을·겨울) 12 SKU
+  const levels = [
+    { n: 1, label: "예방", stage: "Level 1 예방 (Prevention)", target: "치매 전 단계 / 정상군", feature: "고난이도 인지훈련 + 재미 요소", diff: "상" },
+    { n: 2, label: "관리", stage: "Level 2 관리 (MCI · Early Stage)", target: "경도인지장애(MCI) / 초기 단계", feature: "집중력 강화, 회상요법", diff: "중" },
+    { n: 3, label: "돌봄", stage: "Level 3 돌봄 (Moderate · Care)", target: "중증도 인지저하", feature: "감각자극, 간단한 과제, 정서적 안정", diff: "하" },
+  ];
+  const seasons = [
+    { key: "spring", kr: "봄", books: "교재 1·2·3권", price: 150000, extra: "학습교구 Set(16종) + 첫만남 TEST용 학습지", gyogu: "포함" },
+    { key: "summer", kr: "여름", books: "교재 4·5·6권", price: 75000, extra: "증정본 「치매」(중앙대병원 신경과 윤영철 교수)", gyogu: "미포함" },
+    { key: "fall", kr: "가을", books: "교재 7·8·9권", price: 75000, extra: "증정본 「치매에 관한 79가지 궁금증 해결집」", gyogu: "미포함" },
+    { key: "winter", kr: "겨울", books: "교재 10·11·12권", price: 75000, extra: "증정본 「메모리200」(국내 유일 BNT 학습서)", gyogu: "미포함" },
   ];
 
-  for (const p of products) {
-    await prisma.product.upsert({
-      where: { slug: p.slug },
-      update: {},
-      create: p
-    });
+  let order = 0;
+  for (const lv of levels) {
+    for (const s of seasons) {
+      const description =
+        "의사가 만들고 신경과 교수들이 감수한 노화·치매 예방 전문 인지학습 프로그램입니다.\n\n" +
+        `■ 단계: ${lv.stage} (난이도 ${lv.diff})\n` +
+        `■ 대상: ${lv.target}\n` +
+        `■ 특징: ${lv.feature}\n\n` +
+        `[${s.kr} 세트 구성]\n` +
+        `· ${s.books} (본문 각 36p)\n` +
+        `· 학습지도사 지침서\n` +
+        `· ${s.extra}\n` +
+        `· 학습교구: ${s.gyogu}\n\n` +
+        "[전체 프로그램] 학습지는 총 12권으로 봄·여름·가을·겨울 4세트입니다.\n" +
+        "· 봄 세트 150,000원 (학습교구 Set 포함)\n" +
+        "· 여름·가을·겨울 세트 각 75,000원 (학습교구 미포함)\n" +
+        "· 4세트 전체 합계 375,000원";
+
+      const data = {
+        slug: `level${lv.n}-${s.key}`,
+        name: `레벨 ${lv.n} ${s.kr} 세트 (${s.books})`,
+        shortDescription: `${s.books} + 지침서 + ${s.extra} · 학습교구 ${s.gyogu} · ${lv.label}(난이도 ${lv.diff})`,
+        description,
+        price: s.price,
+        category: `레벨 ${lv.n} · ${lv.label}`,
+        stock: 100,
+        thumbnailUrl: `/images/products/textbook-level${lv.n}-${s.key}.png`,
+        tags: `레벨${lv.n},${lv.label},${s.kr},${s.gyogu === "포함" ? "교구포함" : "교구미포함"}`,
+        isActive: true,
+        createdAt: new Date(Date.UTC(2026, 6, 23, 0, 0, order++)),
+      };
+
+      await prisma.product.upsert({ where: { slug: data.slug }, update: data, create: data });
+    }
   }
 
   const posts = [
@@ -130,36 +114,18 @@ async function main() {
   ];
 
   for (const p of posts) {
-    await prisma.blogPost.upsert({
-      where: { slug: p.slug },
-      update: {},
-      create: p
-    });
+    await prisma.blogPost.upsert({ where: { slug: p.slug }, update: {}, create: p });
   }
 
   const resources = [
-    {
-      title: "인지훈련 지도사 교육 매뉴얼",
-      category: "교육자료",
-      description: "지도사 과정 교육용 기본 매뉴얼입니다.",
-      visibility: "expert_only"
-    },
-    {
-      title: "인지평가 기록 양식",
-      category: "평가양식",
-      description: "대상자 인지평가 시 사용하는 기록 양식입니다.",
-      visibility: "expert_only"
-    },
-    {
-      title: "기관 운영 가이드",
-      category: "운영가이드",
-      description: "기관에서 프로그램 운영 시 참고하는 가이드입니다.",
-      visibility: "expert_only"
-    }
+    { title: "인지훈련 지도사 교육 매뉴얼", category: "교육자료", description: "지도사 과정 교육용 기본 매뉴얼입니다.", visibility: "expert_only" },
+    { title: "인지평가 기록 양식", category: "평가양식", description: "대상자 인지평가 시 사용하는 기록 양식입니다.", visibility: "expert_only" },
+    { title: "기관 운영 가이드", category: "운영가이드", description: "기관에서 프로그램 운영 시 참고하는 가이드입니다.", visibility: "expert_only" },
   ];
 
   for (const r of resources) {
-    await prisma.expertResource.create({ data: r });
+    const exists = await prisma.expertResource.findFirst({ where: { title: r.title } });
+    if (!exists) await prisma.expertResource.create({ data: r });
   }
 
   console.log("Seed completed.");

@@ -65,8 +65,8 @@ export default function AboutPage() {
               href: "/education/courses",
             },
             {
-              title: "인지훈련 교구 · 콘텐츠",
-              desc: "워크북, 교구 세트, 훈련 도구 등 인지활동에 필요한 전문 자료를 개발·공급합니다.",
+              title: "인지학습 교재 · 교구",
+              desc: "BTC 1% 인지학습지(총 12권·4계절 세트), 지도사 지침서, 학습교구 등 인지활동 전문 자료를 개발·공급합니다.",
               href: "/shop",
             },
           ].map((item) => (

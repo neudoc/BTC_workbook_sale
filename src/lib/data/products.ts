@@ -6,38 +6,36 @@ export type Product = {
   tags: string[];
 };
 
-export const products: Product[] = [
-  {
-    slug: "workbook-basic",
-    title: "인지훈련 워크북 (기초)",
-    summary: "집에서 따라할 수 있는 기초 인지훈련 문제 모음.",
-    price: 18000,
-    tags: ["워크북", "초급", "가정용"]
-  },
-  {
-    slug: "workbook-advanced",
-    title: "인지훈련 워크북 (심화)",
-    summary: "조금 더 다양한 난이도의 훈련 문제로 구성.",
-    price: 22000,
-    tags: ["워크북", "중급", "가정용"]
-  },
-  {
-    slug: "training-cards",
-    title: "인지활동 카드 세트",
-    summary: "대화·회상·주의집중을 돕는 활동 카드 60장.",
-    price: 29000,
-    tags: ["교구", "카드", "활동"]
-  },
-  {
-    slug: "puzzle-set",
-    title: "두뇌 퍼즐 세트",
-    summary: "공간지각/문제해결을 자극하는 퍼즐 구성(초·중 난이도).",
-    price: 26000,
-    tags: ["교구", "퍼즐"]
-  }
+// BTC 1% 인지학습지 — 레벨(예방/관리/돌봄) × 계절(봄·여름·가을·겨울) SKU 구성
+// 봄 세트 150,000원(학습교구 포함) · 여름·가을·겨울 각 75,000원(교구 미포함)
+type Season = { key: string; kr: string; books: string; price: number };
+
+const seasons: Season[] = [
+  { key: "spring", kr: "봄", books: "교재 1·2·3권", price: 150000 },
+  { key: "summer", kr: "여름", books: "교재 4·5·6권", price: 75000 },
+  { key: "fall", kr: "가을", books: "교재 7·8·9권", price: 75000 },
+  { key: "winter", kr: "겨울", books: "교재 10·11·12권", price: 75000 },
 ];
+
+const levels = [
+  { n: 1, label: "예방", tag: "난이도상" },
+  { n: 2, label: "관리", tag: "MCI" },
+  { n: 3, label: "돌봄", tag: "중증도" },
+];
+
+export const products: Product[] = levels.flatMap((lv) =>
+  seasons.map((s) => ({
+    slug: `level${lv.n}-${s.key}`,
+    title: `레벨 ${lv.n} ${s.kr} 세트 (${s.books})`,
+    summary:
+      s.key === "spring"
+        ? `${s.books} + 지침서 + 학습교구 Set(16종) 포함 — ${lv.label}(레벨 ${lv.n})`
+        : `${s.books} + 지침서 + 증정본 (학습교구 미포함) — ${lv.label}(레벨 ${lv.n})`,
+    price: s.price,
+    tags: [`레벨${lv.n}`, lv.label, s.kr, lv.tag],
+  }))
+);
 
 export function getProduct(slug: string) {
   return products.find((p) => p.slug === slug) ?? null;
 }
-

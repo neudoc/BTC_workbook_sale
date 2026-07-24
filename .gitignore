@@ -9,4 +9,23 @@ dist
 .env.local
 tsconfig.tsbuildinfo
 
-/src/generated/prisma
+# generated Prisma client is committed so Vercel builds don't depend on generate step
+# /src/generated/prisma
+
+# --- exclude from shared website repo ---
+# local dev database (contains user data) — regenerate via prisma seed
+dev.db
+dev.db-*
+dev.db.bak-*
+# proprietary source materials (textbook PDFs, franchise docs, etc.)
+자료/
+Old_web_data/
+# internal / scratch
+.claude/
+verification-screenshots/
+docs/superpowers/
+website_PRD.md
+website_PRD.txt.txt
+test.txt
+problem 1.png
+{console.error(err)

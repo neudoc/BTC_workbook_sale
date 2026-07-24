@@ -1,9 +1,24 @@
 import type { Metadata } from "next";
+import { Noto_Sans_KR, Noto_Serif_KR } from "next/font/google";
 import "./globals.css";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { BottomNav } from "@/components/ui/BottomNav";
 import { siteConfig } from "@/lib/site";
+
+const notoSans = Noto_Sans_KR({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-sans",
+  display: "swap"
+});
+
+const notoSerif = Noto_Serif_KR({
+  subsets: ["latin"],
+  weight: ["600", "700", "900"],
+  variable: "--font-display",
+  display: "swap"
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -36,8 +51,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body>
+    <html lang="ko" className={`${notoSans.variable} ${notoSerif.variable}`}>
+      <body className="font-sans">
         <div className="min-h-dvh flex flex-col">
           <SiteHeader />
           <main className="flex-1 pb-20 md:pb-0">

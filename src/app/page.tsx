@@ -1,430 +1,290 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { siteConfig } from "@/lib/site";
 
-const partners = [
-  { src: "/images/partners/cha.png", alt: "중앙대학교병원 신경과" },
-  { src: "/images/partners/dongnam.png", alt: "동남보건대학교 산학협력단" },
-  { src: "/images/partners/korea-association.png", alt: "한국주야간보호협회" },
-  { src: "/images/partners/goodmorning.png", alt: "굿모닝주간보호센터" },
-  { src: "/images/partners/boram.png", alt: "보람찬어르신센터" },
-  { src: "/images/partners/sangrok.png", alt: "상록단원구노인주간보호센터" },
-  { src: "/images/partners/happyhome.png", alt: "해피홈수원재활주간보호센터" },
-];
-
-const steps = [
+const featuredProducts = [
   {
-    num: "01",
-    title: "검사",
-    subtitle: "AI 인지 평가",
-    desc: "5~10분 만에 인지 상태를 체계적으로 평가합니다.",
-    href: "/screening",
+    title: "BTC 1% 인지학습 레벨 1 (예방)",
+    desc: "치매 전 단계·정상군을 위한 고난이도 인지훈련 (난이도 상) · 여름·가을·겨울 각 75,000원",
+    href: "/shop/level1-spring",
+    image: "/images/products/textbook-level1.png",
+    price: "봄 150,000원",
   },
   {
-    num: "02",
-    title: "분석",
-    subtitle: "영역별 결과 분석",
-    desc: "기억력, 주의집중, 실행기능 등 영역별 점수를 확인합니다.",
-    href: "/screening",
+    title: "BTC 1% 인지학습 레벨 2 (관리)",
+    desc: "경도인지장애(MCI)·초기 단계를 위한 집중력 강화·회상요법 (난이도 중) · 여름·가을·겨울 각 75,000원",
+    href: "/shop/level2-spring",
+    image: "/images/products/textbook-level2.png",
+    price: "봄 150,000원",
   },
   {
-    num: "03",
-    title: "훈련",
-    subtitle: "맞춤형 인지훈련",
-    desc: "개인 수준에 맞는 게임형 훈련 프로그램을 제공합니다.",
-    href: "/training",
+    title: "BTC 1% 인지학습 레벨 3 (돌봄)",
+    desc: "중증도 인지저하를 위한 감각자극·정서안정 활동 (난이도 하) · 여름·가을·겨울 각 75,000원",
+    href: "/shop/level3-spring",
+    image: "/images/products/textbook-level3.png",
+    price: "봄 150,000원",
   },
 ];
 
-const targets = [
+const audiences = [
   {
-    icon: "👤",
-    title: "개인 사용자",
-    desc: "내 인지 건강 상태를 확인하고, 맞춤 훈련으로 뇌건강을 관리하세요.",
-    cta: "무료 검사 시작하기",
-    href: "/screening",
+    title: "가족과 보호자",
+    desc: "어떤 활동을 해야 할지 막막한 보호자가 집에서 차근차근 따라 할 수 있도록 구성했습니다.",
   },
   {
-    icon: "👨‍⚕️",
-    title: "전문가 · 기관",
-    desc: "환자 인지 관리, 교육 자료, 평가 도구를 전문가센터에서 활용하세요.",
-    cta: "전문가센터 안내",
-    href: "/expert",
+    title: "주간보호센터와 기관",
+    desc: "반복 운영이 쉬운 수준별 교재와 지도 흐름으로 프로그램 품질을 안정적으로 유지합니다.",
   },
   {
-    icon: "👨‍👩‍👧",
-    title: "보호자 · 가족",
-    desc: "가족의 인지 상태를 이해하고, 일상에서 도울 수 있는 방법을 알아보세요.",
-    cta: "가이드 읽기",
-    href: "/blog",
+    title: "인지학습지도사",
+    desc: "수업 준비 시간을 줄이고 대상자의 반응을 보며 활동을 조정할 수 있는 지도서를 제공합니다.",
   },
+];
+
+const impactItems = [
+  "치매와 인지장애가 걱정되는 가정을 위한 쉬운 교육 자료 제공",
+  "지역사회 기관에서 반복 운영 가능한 인지학습 프로그램 보급",
+  "인지학습지도사 양성을 통한 돌봄 현장의 전문성 강화",
 ];
 
 export default function HomePage() {
   return (
-    <div>
-      {/* Hero */}
-      <section className="px-4 py-16 md:py-24">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
-            {/* Left: Text */}
-            <div>
-              <p className="text-sm font-medium tracking-widest text-brand-700 uppercase">
-                치매 예방 · 뇌건강 · 인지 예비능
-              </p>
-              <h1 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 md:text-5xl md:leading-[1.15]">
-                뇌건강을 위한
-                <br />
-                인지 케어 플랫폼
-              </h1>
-              <p className="mt-5 text-lg leading-relaxed text-slate-600">
-                과학적 근거 기반의 인지 평가와 맞춤형 훈련으로
-                인지 예비능을 높이는 통합 솔루션을 제공합니다.
-              </p>
-
-              {/* Checkmarks */}
-              <ul className="mt-6 space-y-2.5">
-                {[
-                  "전문가 검증 인지 평가 도구",
-                  "개인 맞춤형 인지훈련 프로그램",
-                  "의료진 · 연구진 참여 개발",
-                ].map((item) => (
-                  <li key={item} className="flex items-center gap-2.5 text-slate-700">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700">
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                    </span>
-                    <span className="text-[15px] font-medium">{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href="/screening"
-                  className="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-3.5 text-base font-semibold text-white hover:bg-slate-800 transition-colors"
-                >
-                  무료 인지검사 시작하기
-                </Link>
-                <Link
-                  href="/training"
-                  className="inline-flex items-center justify-center rounded-full border border-slate-200 px-8 py-3.5 text-base font-medium text-slate-700 hover:bg-slate-50 transition-colors"
-                >
-                  훈련 체험하기
-                </Link>
-              </div>
-
-              <p className="mt-4 text-xs text-slate-500">
-                * 본 서비스의 검사·훈련은 의료적 진단을 대체하지 않으며 건강관리 참고용입니다.
-              </p>
-            </div>
-
-            {/* Right: Visual */}
-            <div className="relative">
-              <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-                <Image
-                  src="/images/home/senior-tablet.png"
-                  alt="태블릿으로 인지훈련을 하는 어르신"
-                  width={600}
-                  height={450}
-                  className="w-full object-cover"
-                  priority
-                />
-              </div>
-              {/* Floating card */}
-              <div className="absolute -bottom-4 -left-4 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-lg">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-100 text-brand-700">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L12.5 7.5L18 10L12.5 12.5L10 18L7.5 12.5L2 10L7.5 7.5L10 2Z" fill="currentColor"/></svg>
-                  </div>
-                  <div>
-                    <div className="text-xs text-slate-500">AI 기반 분석</div>
-                    <div className="text-sm font-semibold text-slate-900">영역별 인지 평가</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Trust Bar - Numbers + Partners */}
-      <section className="border-y border-slate-100 bg-slate-50/50">
-        <div className="mx-auto max-w-6xl px-4 py-10">
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-6 text-center">
-            {[
-              { num: "5,000+", label: "서비스 이용자" },
-              { num: "20+", label: "협력 기관" },
-              { num: "7종", label: "인지훈련 게임" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <div className="text-2xl font-bold text-slate-900 md:text-3xl">{stat.num}</div>
-                <div className="mt-1 text-sm text-slate-600">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Partner logos */}
-          <div className="mt-8 border-t border-slate-200 pt-6">
-            <p className="mb-4 text-center text-xs font-medium tracking-widest text-slate-400 uppercase">
-              협력 기관
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-6">
-              {partners.map((p) => (
-                <div key={p.alt} className="h-10 w-auto opacity-60 hover:opacity-100 transition-opacity">
-                  <Image src={p.src} alt={p.alt} width={80} height={40} className="h-10 w-auto object-contain" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3-Step Process */}
-      <section className="px-4 py-16 md:py-24">
-        <div className="mx-auto max-w-5xl">
-          <div className="text-center">
-            <p className="text-sm font-medium tracking-widest text-brand-700 uppercase">
-              How it works
-            </p>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
-              3단계 인지 케어 프로세스
-            </h2>
-            <p className="mt-3 text-slate-600">
-              검사부터 맞춤 훈련까지, 체계적인 과정으로 인지건강을 관리합니다.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
-            {steps.map((s) => (
-              <Link
-                key={s.num}
-                href={s.href}
-                className="group rounded-2xl border border-slate-200 bg-white p-8 text-center transition-all hover:border-brand-200 hover:shadow-lg"
-              >
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-slate-900 text-lg font-bold text-white">
-                  {s.num}
-                </div>
-                <h3 className="mt-5 text-xl font-bold text-slate-900">{s.title}</h3>
-                <p className="mt-1 text-sm font-medium text-brand-700">{s.subtitle}</p>
-                <p className="mt-3 text-sm leading-relaxed text-slate-600">{s.desc}</p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Target Segments */}
-      <section className="border-t border-slate-100 bg-slate-50/50">
-        <div className="mx-auto max-w-5xl px-4 py-16 md:py-24">
-          <div className="text-center">
-            <p className="text-sm font-medium tracking-widest text-brand-700 uppercase">
-              For everyone
-            </p>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
-              사용자별 맞춤 경험
-            </h2>
-          </div>
-
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {targets.map((t) => (
-              <div
-                key={t.title}
-                className="flex flex-col rounded-2xl border border-slate-200 bg-white p-8"
-              >
-                <div className="text-3xl">{t.icon}</div>
-                <h3 className="mt-4 text-lg font-bold text-slate-900">{t.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">{t.desc}</p>
-                <Link
-                  href={t.href}
-                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:gap-2.5 transition-all"
-                >
-                  {t.cta} <span aria-hidden="true">→</span>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Education Courses */}
-      <section className="px-4 py-16 md:py-24">
-        <div className="mx-auto max-w-5xl">
-          <div className="text-center">
-            <p className="text-sm font-medium tracking-widest text-brand-700 uppercase">
-              Education
-            </p>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
-              전문가 교육과정
-            </h2>
-            <p className="mt-3 text-slate-600">
-              인지학습지도사 양성부터 보호자 교육까지, 체계적인 교육 프로그램을 제공합니다.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {[
-              {
-                title: "인지학습지도사 기초과정",
-                desc: "뇌건강 기초 이론부터 인지훈련 실습, 프로그램 운영 실무까지 8주 과정",
-                tag: "자격과정",
-                href: "/education/courses/cognitive-instructor-basic",
-              },
-              {
-                title: "인지학습지도사 심화과정",
-                desc: "고급 인지평가, 특수 인지훈련, 기관 운영 실무를 다루는 6주 심화 과정",
-                tag: "자격과정",
-                href: "/education/courses/cognitive-instructor-advanced",
-              },
-              {
-                title: "가족 보호자 교육과정",
-                desc: "치매 가족 보호자를 위한 실용적인 인지케어 교육 4주 과정",
-                tag: "일반과정",
-                href: "/education/courses/family-caregiver",
-              },
-            ].map((course) => (
-              <Link
-                key={course.title}
-                href={course.href}
-                className="group rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:border-brand-200 hover:shadow-lg"
-              >
-                <span className="rounded-full border border-brand-100 bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-900">
-                  {course.tag}
-                </span>
-                <h3 className="mt-4 text-lg font-semibold text-slate-900">{course.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-700">{course.desc}</p>
-                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 group-hover:underline">
-                  과정 상세보기 <span aria-hidden="true">→</span>
-                </span>
-              </Link>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link
-              href="/education/courses"
-              className="inline-flex items-center justify-center rounded-full border border-slate-200 px-8 py-3.5 text-base font-medium text-slate-700 hover:bg-slate-50 transition-colors"
-            >
-              전체 교육과정 보기
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Screenshots / Preview */}
-      <section className="px-4 py-16 md:py-24">
-        <div className="mx-auto max-w-5xl">
-          <div className="text-center">
-            <p className="text-sm font-medium tracking-widest text-brand-700 uppercase">
-              Preview
-            </p>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
-              실제 서비스 화면
-            </h2>
-            <p className="mt-3 text-slate-600">
-              훈련 화면, 검사 리포트, 교육 현장 모습을 미리 확인하세요.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {[
-              { src: "/images/home/training-class.jpg", alt: "인지훈련 교육 현장", label: "인지훈련 현장" },
-              { src: "/images/home/active-seniors.png", alt: "인지훈련에 참여하는 어르신들", label: "훈련 참여 모습" },
-              { src: "/images/home/products.jpg", alt: "인지훈련 교구 및 워크북", label: "교구와 워크북" },
-            ].map((img) => (
-              <div key={img.label} className="overflow-hidden rounded-2xl border border-slate-200">
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  width={400}
-                  height={300}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Blog + Shop */}
-      <section className="border-t border-slate-100 bg-slate-50/50">
-        <div className="mx-auto max-w-5xl px-4 py-16 md:py-24">
-          <div className="grid gap-12 md:grid-cols-2 md:gap-16">
-            {/* Blog */}
-            <div>
-              <p className="text-xs font-medium tracking-widest text-brand-700 uppercase">Blog</p>
-              <h2 className="mt-3 text-xl font-bold">뇌건강 정보</h2>
-              <div className="mt-6 space-y-3">
-                {[
-                  { title: "인지 예비능, 쉽게 이해하기", href: "/blog/cognitive-reserve-basics" },
-                  { title: "하루 10분 뇌건강 루틴 만들기", href: "/blog/daily-brain-routine" },
-                  { title: "보호자에게 도움이 되는 대화 방법", href: "/blog/caregiver-communication" },
-                ].map((post) => (
-                  <Link
-                    key={post.href}
-                    href={post.href}
-                    className="group flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-5 py-4 transition-colors hover:border-brand-200"
-                  >
-                    <span className="text-sm font-medium text-slate-800 group-hover:text-brand-800">{post.title}</span>
-                    <span className="text-slate-400 group-hover:text-brand-700 transition-colors">→</span>
-                  </Link>
-                ))}
-              </div>
-              <Link href="/blog" className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-brand-700 hover:gap-2.5 transition-all">
-                전체 글 보기 →
-              </Link>
-            </div>
-
-            {/* Shop */}
-            <div>
-              <p className="text-xs font-medium tracking-widest text-brand-700 uppercase">Shop</p>
-              <h2 className="mt-3 text-xl font-bold">인지훈련 교구</h2>
-              <div className="mt-6 space-y-3">
-                {[
-                  { title: "인지훈련 워크북 (기초)", price: "18,000원", href: "/shop/workbook-basic" },
-                  { title: "인지훈련 워크북 (심화)", price: "22,000원", href: "/shop/workbook-advanced" },
-                  { title: "인지활동 카드 세트", price: "29,000원", href: "/shop/training-cards" },
-                ].map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="group flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-5 py-4 transition-colors hover:border-brand-200"
-                  >
-                    <span className="text-sm font-medium text-slate-800 group-hover:text-brand-800">{item.title}</span>
-                    <span className="text-sm font-semibold text-slate-600">{item.price}</span>
-                  </Link>
-                ))}
-              </div>
-              <Link href="/shop" className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-brand-700 hover:gap-2.5 transition-all">
-                전체 상품 보기 →
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="border-t border-slate-100">
-        <div className="mx-auto max-w-3xl px-4 py-20 text-center md:py-28">
-          <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
-            지금 바로 시작해보세요
-          </h2>
-          <p className="mt-4 text-lg text-slate-600">
-            무료 인지검사와 훈련으로 뇌건강 관리의 첫걸음을 내디뎌보세요.
+    <div className="space-y-20">
+      <section className="grid items-center gap-12 pt-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
+        <div>
+          <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-600">
+            <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
+            BTC 1% 인지학습
           </p>
-          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+          <h1 className="mt-5 break-words text-[1.85rem] font-bold leading-[1.22] tracking-tight text-slate-950 sm:text-[2.8rem] lg:text-[3.2rem]">
+            의사가 만든
+            <br />
+            노화·치매 예방
+            <span className="mt-2 block text-brand-800">1% 인지학습지</span>
+          </h1>
+          <p className="mt-7 max-w-xl text-base leading-8 text-slate-700 sm:text-lg sm:leading-9">
+            신경과 교수들이 감수한 단계별 맞춤 인지훈련 프로그램. 학습지 한 장
+            한 장마다 의사의 처방과 같은 지침서가 함께합니다.
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/screening"
-              className="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-3.5 text-base font-semibold text-white hover:bg-slate-800 transition-colors"
+              href="/shop"
+              className="inline-flex items-center justify-center rounded-full bg-brand-700 px-7 py-3.5 text-base font-bold text-white shadow-sm transition hover:bg-brand-800"
             >
-              무료 인지검사 시작하기
+              교재 보러가기
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center rounded-full border border-slate-200 px-8 py-3.5 text-base font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+              className="inline-flex items-center justify-center rounded-full border border-slate-300 px-7 py-3.5 text-base font-bold text-slate-800 transition hover:border-brand-600 hover:text-brand-800"
             >
-              기관·전문가 문의
+              지도사 문의
             </Link>
           </div>
+          <dl className="mt-9 grid grid-cols-3 gap-3 border-t border-slate-200 pt-5">
+            <div>
+              <dt className="text-xs font-semibold text-slate-500">전체 구성</dt>
+              <dd className="mt-1 text-sm font-bold text-slate-950 sm:text-base">12권 · 4계절</dd>
+            </div>
+            <div>
+              <dt className="text-xs font-semibold text-slate-500">단계</dt>
+              <dd className="mt-1 text-sm font-bold text-slate-950 sm:text-base">예방·관리·돌봄</dd>
+            </div>
+            <div>
+              <dt className="text-xs font-semibold text-slate-500">감수</dt>
+              <dd className="mt-1 text-sm font-bold text-slate-950 sm:text-base">신경과 교수진</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div className="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-100">
+          <Image
+            src="/images/home/products.jpg"
+            alt="인지학습 교재와 교구"
+            width={680}
+            height={520}
+            priority
+            className="aspect-[4/3] h-full w-full object-cover"
+          />
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/85 to-transparent p-5 text-white">
+            <p className="text-sm font-semibold">수준별 교재와 실전 지도서</p>
+            <p className="mt-1 text-xs leading-5 text-slate-200">
+              보호자, 센터, 지도사가 같은 흐름으로 사용할 수 있는 프로그램형 자료
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+          <div>
+            <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-600">
+              <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
+              단계별 맞춤 인지훈련
+            </p>
+            <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+              인지 상태에 맞는 레벨을 선택하세요
+            </h2>
+            <p className="mt-3 max-w-2xl leading-7 text-slate-700">
+              레벨 1 예방(정상군), 레벨 2 관리(경도인지장애), 레벨 3 돌봄(중증도).
+              각 레벨은 봄·여름·가을·겨울 4세트, 총 12권으로 구성됩니다.
+            </p>
+          </div>
+          <Link
+            href="/shop"
+            className="inline-flex items-center justify-center rounded-full bg-slate-950 px-6 py-3 text-sm font-bold text-white transition hover:bg-slate-800"
+          >
+            전체 상품 보기
+          </Link>
+        </div>
+
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {featuredProducts.map((product) => (
+            <Link
+              key={product.href}
+              href={product.href}
+              className="group overflow-hidden rounded-lg border border-slate-200 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-hover"
+            >
+              <div className="aspect-[3/4] overflow-hidden bg-slate-50 p-3">
+                <Image
+                  src={product.image}
+                  alt={product.title}
+                  width={420}
+                  height={560}
+                  className="h-full w-full object-contain transition duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-slate-950">{product.title}</h3>
+                <p className="mt-2 min-h-[4.5rem] text-sm leading-6 text-slate-700">
+                  {product.desc}
+                </p>
+                <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4">
+                  <span className="text-lg font-bold text-brand-800">{product.price}</span>
+                  <span className="text-sm font-bold text-slate-900">상세 보기</span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="grid gap-5 md:grid-cols-3">
+        {audiences.map((item) => (
+          <div key={item.title} className="rounded-lg border border-slate-200 bg-slate-50 p-6">
+            <h3 className="text-lg font-bold text-slate-950">{item.title}</h3>
+            <p className="mt-3 text-sm leading-7 text-slate-700">{item.desc}</p>
+          </div>
+        ))}
+      </section>
+
+      <section className="grid gap-8 rounded-lg bg-brand-950 p-6 text-white sm:p-10 lg:grid-cols-[0.9fr_1.1fr]">
+        <div>
+          <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-300">
+            <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
+            SOCIAL IMPACT
+          </p>
+          <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
+            교재를 판매하는 것을 넘어, 사회적 기여를 함께 만듭니다
+          </h2>
+          <p className="mt-4 leading-8 text-brand-50">
+            인지건강은 개인의 문제가 아니라 가족과 지역사회가 함께 돌봐야 할
+            영역입니다. BrainTrust Club은 실용적인 교재와 교육을 통해 돌봄
+            현장의 부담을 낮추고 지속 가능한 학습 문화를 넓혀갑니다.
+          </p>
+        </div>
+        <ul className="grid gap-3">
+          {impactItems.map((item) => (
+            <li key={item} className="rounded-lg border border-white/15 bg-white/10 p-4 text-sm leading-7">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="grid items-center gap-8 lg:grid-cols-2">
+        <div className="overflow-hidden rounded-lg border border-slate-200">
+          <Image
+            src="/images/home/training-class.jpg"
+            alt="인지학습지도사 교육 현장"
+            width={620}
+            height={420}
+            className="aspect-[4/3] h-full w-full object-cover"
+          />
+        </div>
+        <div>
+          <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-600">
+            <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
+            INSTRUCTOR
+          </p>
+          <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+            인지학습지도사 선생님을 모집합니다
+          </h2>
+          <p className="mt-4 leading-8 text-slate-700">
+            교재와 지도서를 활용해 어르신, 보호자, 기관 프로그램을 이끌
+            선생님을 기다립니다. 교육 수료 후 지역사회 현장에서 인지학습
+            프로그램을 운영할 수 있도록 자료와 상담을 지원합니다.
+          </p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/education/courses"
+              className="inline-flex items-center justify-center rounded-full bg-slate-950 px-6 py-3 text-sm font-bold text-white transition hover:bg-slate-800"
+            >
+              교육과정 보기
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 text-sm font-bold text-slate-800 transition hover:border-brand-600 hover:text-brand-800"
+            >
+              지도사 등록 문의
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-5 rounded-lg border border-slate-200 bg-white p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
+        <div>
+          <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-600">
+            <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
+            BLOG
+          </p>
+          <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">
+            인지장애와 치매 관련 정보는 블로그에서 더 자세히 확인하세요
+          </h2>
+          <p className="mt-3 leading-7 text-slate-700">
+            보호자 교육, 치매 예방, 일상 속 인지활동 자료를 꾸준히 제공합니다.
+          </p>
+        </div>
+        <a
+          href={siteConfig.blogUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center justify-center rounded-full bg-brand-700 px-7 py-3 text-sm font-bold text-white transition hover:bg-brand-800"
+        >
+          neudoc.tistory.com 방문
+        </a>
+      </section>
+
+      <section className="pb-6 text-center">
+        <h2 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+          교재 구매, 기관 도입, 지도사 문의를 한 번에 상담해 드립니다
+        </h2>
+        <p className="mx-auto mt-4 max-w-2xl leading-8 text-slate-700">
+          필요한 대상, 운영 환경, 희망 교육 형태를 알려주시면 적합한 교재와
+          프로그램 방향을 안내하겠습니다.
+        </p>
+        <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+          <Link
+            href="/shop"
+            className="inline-flex items-center justify-center rounded-full bg-brand-700 px-8 py-3 text-base font-bold text-white transition hover:bg-brand-800"
+          >
+            교재 구매하기
+          </Link>
+          <Link
+            href="/contact"
+            className="inline-flex items-center justify-center rounded-full border border-slate-300 px-8 py-3 text-base font-bold text-slate-800 transition hover:border-brand-600 hover:text-brand-800"
+          >
+            상담 문의하기
+          </Link>
         </div>
       </section>
     </div>

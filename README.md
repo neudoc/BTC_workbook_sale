@@ -56,3 +56,5 @@ docker run --rm -p 3000:3000 -e ADMIN_INVITE_CODE=yourcode braintrustclub-web
 ## 주의
 
 이 저장소의 인증/권한/결제/데이터저장은 **프로덕션 보안 요구사항을 만족하지 않는 데모 구현**입니다. 실제 운영 환경에서는 PRD에 명시된 것처럼 DB(PostgreSQL), NextAuth/커스텀 인증, PG 연동, 관리자 CMS 등을 통해 교체/확장해야 합니다.
+"# BTC-1-" 
+"# BTC_workbook_sale" 

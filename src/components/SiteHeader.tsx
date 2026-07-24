@@ -9,7 +9,7 @@ const navItems = [
   { href: "/programs", label: "프로그램", external: false },
   { href: "/education/courses", label: "지도사 교육", external: false },
   { href: "/screening", label: "인지 자가점검", external: false },
-  { href: siteConfig.blogUrl, label: "정보 블로그", external: true },
+  { href: siteConfig.blogUrl, label: "뇌 건강정보", external: true },
   { href: "/contact", label: "문의", external: false },
 ] as const;
 

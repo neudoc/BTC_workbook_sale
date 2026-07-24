@@ -42,7 +42,7 @@ export function SiteFooter() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  정보 블로그
+                  뇌 건강정보
                 </a>
               </li>
               <li>

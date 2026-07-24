@@ -26,6 +26,9 @@ export type ScreeningRecord = {
   test: string;
   summary: string;
   note: string;
+  score?: number;
+  maxScore?: number;
+  level?: string;
 };
 
 function safeParse<T>(raw: string | null, fallback: T): T {

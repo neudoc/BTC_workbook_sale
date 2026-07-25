@@ -9,13 +9,14 @@ export const metadata: Metadata = {
 };
 
 const partners = [
-  { src: "/images/partners/cha.png", alt: "중앙대학교병원 신경과" },
-  { src: "/images/partners/dongnam.png", alt: "동남보건대학교 산학협력단" },
-  { src: "/images/partners/korea-association.png", alt: "한국주야간보호협회" },
+  { src: "/images/partners/happyhome.png", alt: "해피홈수원재활주간보호센터" },
   { src: "/images/partners/goodmorning.png", alt: "굿모닝주간보호센터" },
+  { src: "/images/partners/dongnam.png", alt: "동남보건대학교 산학협력단" },
   { src: "/images/partners/boram.png", alt: "보람찬어르신센터" },
   { src: "/images/partners/sangrok.png", alt: "상록단원구노인주간보호센터" },
-  { src: "/images/partners/happyhome.png", alt: "해피홈수원재활주간보호센터" },
+  { src: "/images/partners/kyungwoon.png", alt: "경운대학교" },
+  { src: "/images/partners/korea-association.png", alt: "한국주야간보호협회" },
+  { src: "/images/partners/cha.png", alt: "중앙대학교병원 신경과" },
 ];
 
 export default function AboutPage() {
@@ -25,6 +26,20 @@ export default function AboutPage() {
         title="브레인트러스트 클럽"
         description="인지건강 플랫폼 · 기억을 지키고, 건강한 내일을 엽니다."
       />
+
+      <figure className="overflow-hidden rounded-2xl border border-slate-200 shadow-card">
+        <Image
+          src="/images/about/instructor-ceremony.jpg"
+          alt="인지학습 전문 지도사 양성과정 설명회 및 협약식 단체사진"
+          width={1400}
+          height={663}
+          priority
+          className="h-auto w-full object-cover"
+        />
+        <figcaption className="bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-600">
+          인지학습 전문 지도사 양성과정 · BTC 사업설명회 및 협약식 (2026. 2. 12, 동남보건대학교 — 중앙대학교병원 윤영철 교수 초청)
+        </figcaption>
+      </figure>
 
       {/* Mission & Vision */}
       <section className="rounded-2xl border border-slate-200 bg-white p-8 space-y-6">

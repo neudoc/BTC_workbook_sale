@@ -47,6 +47,17 @@ const impactItems = [
   "인지학습지도사 양성을 통한 돌봄 현장의 전문성 강화",
 ];
 
+const partners = [
+  { src: "/images/partners/happyhome.png", alt: "해피홈수원재활주간보호센터" },
+  { src: "/images/partners/goodmorning.png", alt: "굿모닝주간보호센터" },
+  { src: "/images/partners/dongnam.png", alt: "동남보건대학교 산학협력단" },
+  { src: "/images/partners/boram.png", alt: "보람찬어르신센터" },
+  { src: "/images/partners/sangrok.png", alt: "상록단원구노인주간보호센터" },
+  { src: "/images/partners/kyungwoon.png", alt: "경운대학교" },
+  { src: "/images/partners/korea-association.png", alt: "한국주야간보호협회" },
+  { src: "/images/partners/cha.png", alt: "중앙대학교병원 신경과" },
+];
+
 export default function HomePage() {
   return (
     <div className="space-y-20">
@@ -285,6 +296,33 @@ export default function HomePage() {
           >
             상담 문의하기
           </Link>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 pt-10">
+        <p className="flex items-center justify-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-600">
+          <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
+          PARTNERS
+          <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
+        </p>
+        <h2 className="mt-2 text-center text-2xl font-bold tracking-tight text-slate-950">
+          함께하는 협력기관
+        </h2>
+        <div className="mx-auto mt-8 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-4">
+          {partners.map((p) => (
+            <figure key={p.alt} className="flex flex-col items-center gap-2 text-center">
+              <div className="flex h-16 items-center justify-center">
+                <Image
+                  src={p.src}
+                  alt={p.alt}
+                  width={180}
+                  height={80}
+                  className="max-h-16 w-auto object-contain"
+                />
+              </div>
+              <figcaption className="text-xs leading-4 text-slate-600">{p.alt}</figcaption>
+            </figure>
+          ))}
         </div>
       </section>
     </div>

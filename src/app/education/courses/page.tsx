@@ -16,6 +16,35 @@ export default function CoursesPage() {
         title="교육과정"
         description="인지학습지도사 양성과정과 보호자 교육 프로그램을 소개합니다."
       />
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <figure className="overflow-hidden rounded-2xl border border-slate-200 shadow-card">
+          <Image
+            src="/images/about/instructor-ceremony.jpg"
+            alt="인지학습 전문 지도사 양성과정 설명회 및 협약식 단체사진"
+            width={1400}
+            height={663}
+            priority
+            className="h-auto w-full object-cover"
+          />
+          <figcaption className="bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-600">
+            인지학습 전문 지도사 양성과정 · BTC 사업설명회 및 협약식 (2026. 2. 12, 동남보건대학교)
+          </figcaption>
+        </figure>
+        <figure className="overflow-hidden rounded-2xl border border-slate-200 shadow-card">
+          <Image
+            src="/images/about/kyungwoon-training.jpg"
+            alt="경운대학교 RISE총괄사업단 인지훈련 전문지도사 양성과정 단체사진"
+            width={2600}
+            height={1345}
+            className="h-auto w-full object-cover"
+          />
+          <figcaption className="bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-600">
+            경운대학교 RISE총괄사업단 · 인지훈련 전문지도사 양성과정 (2025. 12. 6 ~ 2026. 1. 10, 별관 강의실 601호)
+          </figcaption>
+        </figure>
+      </div>
+
       <div className="grid gap-4 md:grid-cols-2">
         {courses.map((course) => (
           <CourseCard key={course.id} course={course} />

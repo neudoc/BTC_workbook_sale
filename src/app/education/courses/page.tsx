@@ -33,7 +33,7 @@ export default function CoursesPage() {
         </figure>
         <figure className="overflow-hidden rounded-2xl border border-slate-200 shadow-card">
           <Image
-            src="/images/about/kyungwoon-training.jpg"
+            src="/images/about/kyungwoon-training-v2.jpg"
             alt="경운대학교 RISE총괄사업단 인지훈련 전문지도사 양성과정 단체사진"
             width={2600}
             height={1345}
@@ -61,7 +61,7 @@ export default function CoursesPage() {
         </h2>
 
         <div className="mt-6 grid gap-6 sm:grid-cols-[220px_1fr] sm:items-start">
-          <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50 shadow-sm">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm">
             <Image
               src="/images/previews/lecture/cover.jpg"
               alt="뇌 건강 코칭, 1%의 변화를 이끄는 힘 표지"
@@ -93,7 +93,7 @@ export default function CoursesPage() {
             {["toc1", "toc2", "toc3"].map((n) => (
               <figure
                 key={n}
-                className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50 shadow-sm"
+                className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm"
               >
                 <Image
                   src={`/images/previews/lecture/${n}.jpg`}
@@ -117,7 +117,7 @@ export default function CoursesPage() {
             ].map((pg) => (
               <figure
                 key={pg.src}
-                className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50 shadow-sm"
+                className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm"
               >
                 <Image
                   src={`/images/previews/lecture/${pg.src}.jpg`}

@@ -107,7 +107,7 @@ export default function HomePage() {
           </dl>
         </div>
 
-        <div className="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-100">
+        <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
           <Image
             src="/images/home/products.jpg"
             alt="인지학습 교재와 교구"
@@ -153,15 +153,15 @@ export default function HomePage() {
             <Link
               key={product.href}
               href={product.href}
-              className="group overflow-hidden rounded-lg border border-slate-200 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-hover"
+              className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-hover"
             >
-              <div className="aspect-[3/4] overflow-hidden bg-slate-50 p-3">
+              <div className="flex aspect-[3/4] items-center justify-center overflow-hidden bg-gradient-to-b from-slate-100 to-white p-5">
                 <Image
                   src={product.image}
                   alt={product.title}
                   width={420}
                   height={560}
-                  className="h-full w-full object-contain transition duration-500 group-hover:scale-105"
+                  className="max-h-full w-auto rounded-sm object-contain shadow-lg transition duration-500 group-hover:scale-105"
                 />
               </div>
               <div className="p-5">
@@ -181,14 +181,14 @@ export default function HomePage() {
 
       <section className="grid gap-5 md:grid-cols-3">
         {audiences.map((item) => (
-          <div key={item.title} className="rounded-lg border border-slate-200 bg-slate-50 p-6">
+          <div key={item.title} className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
             <h3 className="text-lg font-bold text-slate-950">{item.title}</h3>
             <p className="mt-3 text-sm leading-7 text-slate-700">{item.desc}</p>
           </div>
         ))}
       </section>
 
-      <section className="grid gap-8 rounded-lg bg-brand-950 p-6 text-white sm:p-10 lg:grid-cols-[0.9fr_1.1fr]">
+      <section className="grid gap-8 rounded-2xl bg-brand-950 p-6 text-white sm:p-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
           <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-300">
             <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
@@ -205,7 +205,7 @@ export default function HomePage() {
         </div>
         <ul className="grid gap-3">
           {impactItems.map((item) => (
-            <li key={item} className="rounded-lg border border-white/15 bg-white/10 p-4 text-sm leading-7">
+            <li key={item} className="rounded-2xl border border-white/15 bg-white/10 p-4 text-sm leading-7">
               {item}
             </li>
           ))}
@@ -213,7 +213,7 @@ export default function HomePage() {
       </section>
 
       <section className="grid items-center gap-8 lg:grid-cols-2">
-        <div className="overflow-hidden rounded-lg border border-slate-200">
+        <div className="overflow-hidden rounded-2xl border border-slate-200">
           <Image
             src="/images/home/training-class.jpg"
             alt="인지학습지도사 교육 현장"
@@ -252,7 +252,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="grid gap-5 rounded-lg border border-slate-200 bg-white p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
+      <section className="grid gap-5 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
         <div>
           <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-600">
             <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />

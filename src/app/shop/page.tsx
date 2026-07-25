@@ -41,7 +41,7 @@ export default async function ShopPage() {
         description="의사가 만든 노화·치매 예방 인지학습지입니다. 레벨을 고른 뒤, 봄·여름·가을·겨울 세트를 계절별로 구매할 수 있습니다."
       />
 
-      <div className="rounded-lg border border-brand-200 bg-brand-50 p-5">
+      <div className="rounded-2xl border border-brand-200 bg-brand-50 p-5">
         <h2 className="text-lg font-bold text-brand-900">구매 안내</h2>
         <p className="mt-2 text-sm leading-6 text-slate-700">
           학습지는 총 12권으로 봄·여름·가을·겨울 4세트입니다. 봄 세트(150,000원)에는
@@ -72,11 +72,11 @@ export default async function ShopPage() {
               return (
                 <div
                   key={product.id}
-                  className="group overflow-hidden rounded-lg border border-slate-200 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-hover"
+                  className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-hover"
                 >
                   <Link
                     href={`/shop/${product.slug}`}
-                    className="relative block aspect-[3/4] overflow-hidden bg-slate-50 p-3"
+                    className="flex aspect-[3/4] items-center justify-center overflow-hidden bg-gradient-to-b from-slate-100 to-white p-5"
                   >
                     {product.thumbnailUrl ? (
                       <Image
@@ -84,7 +84,7 @@ export default async function ShopPage() {
                         alt={product.name}
                         width={420}
                         height={560}
-                        className="h-full w-full object-contain transition duration-500 group-hover:scale-105"
+                        className="max-h-full w-auto rounded-sm object-contain shadow-lg transition duration-500 group-hover:scale-105"
                       />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center text-sm text-slate-500">
@@ -139,7 +139,7 @@ export default async function ShopPage() {
       ))}
 
       {products.length === 0 ? (
-        <div className="rounded-lg border border-slate-200 bg-white p-12 text-center text-slate-600">
+        <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center text-slate-600">
           등록된 상품이 없습니다.
         </div>
       ) : null}

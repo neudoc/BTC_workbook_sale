@@ -19,13 +19,13 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
       <div className="hidden bg-brand-950 text-brand-100 md:block">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-1.5 text-xs">
-          <p className="tracking-wide">
+        <div className="mx-auto flex min-h-[48px] w-full max-w-6xl items-center justify-between gap-4 px-4 text-base">
+          <p className="flex items-center tracking-wide">
             의사가 만든 노화·치매 예방 인지학습 프로그램{" "}
-            <span className="font-semibold text-gold-300">BTC 1% 인지학습</span>
+            <span className="ml-1 font-semibold text-gold-300">BTC 1% 인지학습</span>
           </p>
           <a
-            className="font-semibold tracking-wide hover:text-white"
+            className="inline-flex items-center font-semibold tracking-wide hover:text-white"
             href={`tel:${siteConfig.contact.phone}`}
           >
             상담 {siteConfig.contact.phone} · 주중 13:00–17:00
@@ -53,12 +53,12 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-5 text-sm font-medium text-slate-700 lg:flex">
+        <nav className="hidden items-center gap-5 text-lg font-medium text-slate-700 lg:flex">
           {navItems.map((item) =>
             item.external ? (
               <a
                 key={item.href}
-                className="rounded outline-none transition-colors hover:text-brand-700 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2"
+                className="inline-flex items-center rounded outline-none transition-colors hover:text-brand-700 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2"
                 href={item.href}
                 target="_blank"
                 rel="noreferrer"
@@ -68,7 +68,7 @@ export function SiteHeader() {
             ) : (
               <Link
                 key={item.href}
-                className="rounded outline-none transition-colors hover:text-brand-700 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2"
+                className="inline-flex items-center rounded outline-none transition-colors hover:text-brand-700 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2"
                 href={item.href}
               >
                 {item.label}

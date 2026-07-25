@@ -52,11 +52,11 @@ export default function HomePage() {
     <div className="space-y-20">
       <section className="grid items-center gap-12 pt-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
         <div>
-          <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-600">
+          <p className="flex items-center gap-3 text-lg font-bold tracking-[0.18em] text-gold-600">
             <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
             BTC 1% 인지학습
           </p>
-          <h1 className="mt-5 break-words text-[1.85rem] font-bold leading-[1.22] tracking-tight text-slate-950 sm:text-[2.8rem] lg:text-[3.2rem]">
+          <h1 className="mt-5 break-words text-[1.6rem] font-bold leading-[1.22] tracking-tight text-slate-950 sm:text-[2.4rem] lg:text-[2.7rem]">
             의사가 만든
             <br />
             노화·치매 예방
@@ -117,7 +117,7 @@ export default function HomePage() {
       <section>
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-600">
+            <p className="flex items-center gap-3 text-base font-bold tracking-[0.18em] text-gold-600">
               <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
               단계별 맞춤 인지훈련
             </p>

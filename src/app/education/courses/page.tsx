@@ -18,7 +18,7 @@ export default function CoursesPage() {
       />
 
       <div className="grid gap-4 md:grid-cols-2">
-        <figure className="overflow-hidden rounded-2xl border border-slate-200 shadow-card">
+        <figure className="overflow-hidden rounded-[18px] border border-slate-200 shadow-card">
           <Image
             src="/images/about/instructor-ceremony.jpg"
             alt="인지학습 전문 지도사 양성과정 설명회 및 협약식 단체사진"
@@ -31,7 +31,7 @@ export default function CoursesPage() {
             인지학습 전문 지도사 양성과정 · BTC 사업설명회 및 협약식 (2026. 2. 12, 동남보건대학교)
           </figcaption>
         </figure>
-        <figure className="overflow-hidden rounded-2xl border border-slate-200 shadow-card">
+        <figure className="overflow-hidden rounded-[18px] border border-slate-200 shadow-card">
           <Image
             src="/images/about/kyungwoon-training-v2.jpg"
             alt="경운대학교 RISE총괄사업단 인지훈련 전문지도사 양성과정 단체사진"
@@ -51,8 +51,8 @@ export default function CoursesPage() {
         ))}
       </div>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-card sm:p-8">
-        <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-600">
+      <section className="rounded-[18px] border border-slate-200 bg-white p-6 shadow-card sm:p-8">
+        <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-700">
           <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
           교육 교재
         </p>
@@ -61,7 +61,7 @@ export default function CoursesPage() {
         </h2>
 
         <div className="mt-6 grid gap-6 sm:grid-cols-[220px_1fr] sm:items-start">
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm">
+          <div className="overflow-hidden rounded-[18px] border border-slate-200 bg-slate-50 shadow-sm">
             <Image
               src="/images/previews/lecture/cover.jpg"
               alt="뇌 건강 코칭, 1%의 변화를 이끄는 힘 표지"
@@ -93,7 +93,7 @@ export default function CoursesPage() {
             {["toc1", "toc2", "toc3"].map((n) => (
               <figure
                 key={n}
-                className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm"
+                className="overflow-hidden rounded-[18px] border border-slate-200 bg-slate-50 shadow-sm"
               >
                 <Image
                   src={`/images/previews/lecture/${n}.jpg`}
@@ -117,7 +117,7 @@ export default function CoursesPage() {
             ].map((pg) => (
               <figure
                 key={pg.src}
-                className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm"
+                className="overflow-hidden rounded-[18px] border border-slate-200 bg-slate-50 shadow-sm"
               >
                 <Image
                   src={`/images/previews/lecture/${pg.src}.jpg`}

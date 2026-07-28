@@ -9,7 +9,7 @@ export function SiteFooter() {
           <div>
             <div className="font-display text-lg font-bold text-white">{siteConfig.name}</div>
             <p className="mt-1 text-xs font-semibold tracking-wide text-gold-300">
-              BTC 1% 인지학습 · 의사가 만든 1% 인지학습지
+              BTC 1% 인지학습 · 신경과 교수진 감수 1% 인지학습지
             </p>
             <p className="mt-3 max-w-md leading-7 text-slate-300">
               인지장애와 치매가 걱정되는 가정, 보호자, 기관을 위해

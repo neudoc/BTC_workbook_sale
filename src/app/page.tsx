@@ -63,19 +63,23 @@ export default function HomePage() {
     <div className="space-y-20">
       <section className="grid items-center gap-12 pt-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
         <div>
-          <p className="flex items-center gap-3 text-lg font-bold tracking-[0.18em] text-gold-600">
+          <p className="flex items-center gap-3 text-lg font-bold tracking-[0.18em] text-gold-700">
             <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
             BTC 1% 인지학습
           </p>
-          <h1 className="mt-5 break-words text-[1.6rem] font-bold leading-[1.22] tracking-tight text-slate-950 sm:text-[2.4rem] lg:text-[2.7rem]">
-            의사가 만든
-            <br />
-            노화·치매 예방
-            <span className="mt-2 block text-brand-800">1% 인지학습지</span>
+          <h1 className="mt-5 break-words tracking-tight text-slate-950">
+            <span className="block font-sans text-[1.05rem] font-bold leading-[1.5] text-slate-800 sm:text-[1.3rem] lg:text-[1.45rem]">
+              치매를 전문으로 하는 신경과 교수진이 검토합니다.
+            </span>
+            <span className="mt-3 block text-[1.6rem] font-bold leading-[1.24] text-brand-800 sm:text-[2.4rem] lg:text-[2.7rem]">
+              노화·치매 예방
+              <br />
+              1% 인지학습지
+            </span>
           </h1>
           <p className="mt-7 max-w-xl text-base leading-8 text-slate-700 sm:text-lg sm:leading-9">
-            신경과 교수들이 감수한 단계별 맞춤 인지훈련 프로그램. 학습지 한 장
-            한 장마다 의사의 처방과 같은 지침서가 함께합니다.
+            인지 수준에 따라 예방·관리·돌봄 3단계로 나뉘고, 표준 인지평가 도구로
+            시작 전후를 확인합니다.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -107,7 +111,7 @@ export default function HomePage() {
           </dl>
         </div>
 
-        <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+        <div className="relative overflow-hidden rounded-[18px] border border-slate-200 bg-slate-100">
           <Image
             src="/images/home/products.jpg"
             alt="인지학습 교재와 교구"
@@ -128,7 +132,7 @@ export default function HomePage() {
       <section>
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <p className="flex items-center gap-3 text-base font-bold tracking-[0.18em] text-gold-600">
+            <p className="flex items-center gap-3 text-base font-bold tracking-[0.18em] text-gold-700">
               <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
               단계별 맞춤 인지훈련
             </p>
@@ -153,7 +157,7 @@ export default function HomePage() {
             <Link
               key={product.href}
               href={product.href}
-              className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-hover"
+              className="group overflow-hidden rounded-[18px] border border-slate-200 bg-white shadow-sm transition hover:border-slate-300 hover:shadow-md"
             >
               <div className="flex aspect-[3/4] items-center justify-center overflow-hidden bg-gradient-to-b from-slate-100 to-white p-5">
                 <Image
@@ -181,14 +185,14 @@ export default function HomePage() {
 
       <section className="grid gap-5 md:grid-cols-3">
         {audiences.map((item) => (
-          <div key={item.title} className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+          <div key={item.title} className="rounded-[18px] border border-slate-200 bg-slate-50 p-6">
             <h3 className="text-lg font-bold text-slate-950">{item.title}</h3>
             <p className="mt-3 text-sm leading-7 text-slate-700">{item.desc}</p>
           </div>
         ))}
       </section>
 
-      <section className="grid gap-8 rounded-2xl bg-brand-950 p-6 text-white sm:p-10 lg:grid-cols-[0.9fr_1.1fr]">
+      <section className="grid gap-8 rounded-[18px] bg-brand-950 p-6 text-white sm:p-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
           <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-300">
             <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
@@ -205,7 +209,7 @@ export default function HomePage() {
         </div>
         <ul className="grid gap-3">
           {impactItems.map((item) => (
-            <li key={item} className="rounded-2xl border border-white/15 bg-white/10 p-4 text-sm leading-7">
+            <li key={item} className="rounded-[18px] border border-white/15 bg-white/10 p-4 text-sm leading-7">
               {item}
             </li>
           ))}
@@ -213,7 +217,7 @@ export default function HomePage() {
       </section>
 
       <section className="grid items-center gap-8 lg:grid-cols-2">
-        <div className="overflow-hidden rounded-2xl border border-slate-200">
+        <div className="overflow-hidden rounded-[18px] border border-slate-200">
           <Image
             src="/images/home/training-class.jpg"
             alt="인지학습지도사 교육 현장"
@@ -223,7 +227,7 @@ export default function HomePage() {
           />
         </div>
         <div>
-          <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-600">
+          <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-700">
             <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
             INSTRUCTOR
           </p>
@@ -252,9 +256,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="grid gap-5 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
+      <section className="grid gap-5 rounded-[18px] border border-slate-200 bg-white p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
         <div>
-          <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-600">
+          <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-700">
             <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
             BLOG
           </p>
@@ -300,7 +304,7 @@ export default function HomePage() {
       </section>
 
       <section className="border-t border-slate-200 pt-10">
-        <p className="flex items-center justify-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-600">
+        <p className="flex items-center justify-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-700">
           <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
           PARTNERS
           <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />

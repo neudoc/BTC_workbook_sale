@@ -70,7 +70,7 @@ export default async function ProductDetailPage({
         <p className="mt-3 text-base leading-7 text-slate-700">{product.shortDescription}</p>
       </div>
 
-      <section className="grid overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm lg:grid-cols-[0.95fr_1.05fr]">
+      <section className="grid overflow-hidden rounded-[18px] border border-slate-200 bg-white shadow-sm lg:grid-cols-[0.95fr_1.05fr]">
         <div className="flex flex-col gap-6 bg-gradient-to-b from-slate-100 to-white p-6 lg:pt-10">
           <div className="flex items-start justify-center">
             {product.thumbnailUrl ? (
@@ -88,7 +88,7 @@ export default async function ProductDetailPage({
             )}
           </div>
 
-          <div className="rounded-2xl border border-gold-200 bg-gold-50 p-4">
+          <div className="rounded-[18px] border border-gold-200 bg-gold-50 p-4">
             <p className="flex items-center gap-2 text-sm font-bold text-gold-800">
               <span aria-hidden>👪</span> 보호자도 함께 학습할 수 있어요
             </p>
@@ -108,7 +108,7 @@ export default async function ProductDetailPage({
             </div>
           ) : null}
 
-          <div className="mt-6 grid gap-4 rounded-2xl bg-slate-50 p-4 sm:grid-cols-3">
+          <div className="mt-6 grid gap-4 rounded-[18px] bg-slate-50 p-4 sm:grid-cols-3">
             <div>
               <div className="text-xs font-semibold text-slate-500">판매가</div>
               {product.salePrice ? (
@@ -146,10 +146,10 @@ export default async function ProductDetailPage({
       </section>
 
       {previewPages.length > 0 ? (
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-card sm:p-8">
+        <section className="rounded-[18px] border border-slate-200 bg-white p-6 shadow-card sm:p-8">
           <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-600">
+              <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-700">
                 <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
                 교재 미리보기
               </p>
@@ -163,7 +163,7 @@ export default async function ProductDetailPage({
             {previewPages.map((src, i) => (
               <figure
                 key={src}
-                className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm"
+                className="overflow-hidden rounded-[18px] border border-slate-200 bg-slate-50 shadow-sm"
               >
                 <Image
                   src={src}
@@ -182,7 +182,7 @@ export default async function ProductDetailPage({
 
           {guidePages.length > 0 ? (
             <div className="mt-8 border-t border-slate-100 pt-6">
-              <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-600">
+              <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-700">
                 <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
                 지도사 지침서 예시
               </p>
@@ -198,7 +198,7 @@ export default async function ProductDetailPage({
                 {guidePages.map((src, i) => (
                   <figure
                     key={src}
-                    className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm"
+                    className="overflow-hidden rounded-[18px] border border-slate-200 bg-slate-50 shadow-sm"
                   >
                     <Image
                       src={src}
@@ -218,7 +218,7 @@ export default async function ProductDetailPage({
         </section>
       ) : null}
 
-      <section className="rounded-2xl border border-brand-200 bg-brand-50 p-6">
+      <section className="rounded-[18px] border border-brand-200 bg-brand-50 p-6">
         <h2 className="text-lg font-bold text-brand-950">구매 및 배송 안내</h2>
         <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-700">
           <li>대량 구매, 기관 도입, 지도사 교육 연계 구매는 문의 페이지에서 상담할 수 있습니다.</li>

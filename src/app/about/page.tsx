@@ -27,7 +27,7 @@ export default function AboutPage() {
         description="인지건강 플랫폼 · 기억을 지키고, 건강한 내일을 엽니다."
       />
 
-      <figure className="overflow-hidden rounded-2xl border border-slate-200 shadow-card">
+      <figure className="overflow-hidden rounded-[18px] border border-slate-200 shadow-card">
         <Image
           src="/images/about/instructor-ceremony.jpg"
           alt="인지학습 전문 지도사 양성과정 설명회 및 협약식 단체사진"
@@ -42,7 +42,7 @@ export default function AboutPage() {
       </figure>
 
       {/* Mission & Vision */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-8 space-y-6">
+      <section className="rounded-[18px] border border-slate-200 bg-white p-8 space-y-6">
         <div>
           <p className="text-sm font-medium tracking-widest text-brand-700 uppercase">Mission</p>
           <h2 className="mt-2 text-xl font-bold">미션</h2>
@@ -88,7 +88,7 @@ export default function AboutPage() {
             <Link
               key={item.title}
               href={item.href}
-              className="group rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:border-brand-200 hover:shadow-lg"
+              className="group rounded-[18px] border border-slate-200 bg-white p-6 transition-all hover:border-brand-200 hover:shadow-lg"
             >
               <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-slate-700">{item.desc}</p>
@@ -101,7 +101,7 @@ export default function AboutPage() {
       </section>
 
       {/* Research & Professionalism */}
-      <section className="rounded-2xl border border-slate-200 bg-slate-50 p-8 space-y-4">
+      <section className="rounded-[18px] border border-slate-200 bg-slate-50 p-8 space-y-4">
         <h2 className="text-xl font-bold">연구 · 전문성 기반</h2>
         <ul className="space-y-3 text-slate-700 leading-relaxed">
           <li className="flex items-start gap-3">
@@ -130,7 +130,7 @@ export default function AboutPage() {
           <h2 className="mt-2 text-2xl font-bold">협력 기관</h2>
           <p className="mt-2 text-slate-600">의료, 교육, 복지 분야의 전문 기관과 함께합니다.</p>
         </div>
-        <div className="flex flex-wrap items-center justify-center gap-8 rounded-2xl border border-slate-200 bg-white p-8">
+        <div className="flex flex-wrap items-center justify-center gap-8 rounded-[18px] border border-slate-200 bg-white p-8">
           {partners.map((p) => (
             <div key={p.alt} className="h-12 w-auto opacity-60 hover:opacity-100 transition-opacity">
               <Image src={p.src} alt={p.alt} width={100} height={48} className="h-12 w-auto object-contain" />
@@ -140,7 +140,7 @@ export default function AboutPage() {
       </section>
 
       {/* Disclaimer */}
-      <section className="rounded-2xl border border-slate-200 p-6 space-y-3">
+      <section className="rounded-[18px] border border-slate-200 p-6 space-y-3">
         <h2 className="text-lg font-semibold">중요 안내</h2>
         <p className="text-slate-700">
           본 사이트의 자가점검/훈련은 의료적 진단이 아닌 참고/체험용입니다. 증상이 지속되거나

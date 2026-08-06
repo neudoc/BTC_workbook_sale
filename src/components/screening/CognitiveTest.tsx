@@ -212,7 +212,7 @@ export function CognitiveTest() {
 
   useEffect(() => {
     if (phase === "question" && currentQuestion) {
-      speak(`${currentIndex + 1}번. ${currentQuestion.text}`, { key: `q_${currentQuestion.id}`, force: true });
+      speak(currentQuestion.text, { key: `q_${currentQuestion.id}`, force: true });
     }
     if (phase === "result") {
       speak(`검사 완료. 총점 ${totalScore}점. ${interpretation}`, { key: "result", force: true });
@@ -238,7 +238,7 @@ export function CognitiveTest() {
           screeningStorage.add({
             id: makeId("screening"),
             createdAt: new Date().toISOString(),
-            test: "인지종합검사",
+            test: "간이인지검사",
             summary: `${totalScore}/${cognitiveTest.maxScore}점`,
             note: interpretation
           });
@@ -384,10 +384,10 @@ export function CognitiveTest() {
           <h2 className="text-xl font-semibold text-slate-900">{currentQuestion.text}</h2>
 
           {currentQuestion.type === "choice" && currentQuestion.options ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {currentQuestion.options.map((option) => (
+            <div key={currentQuestion.id} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {currentQuestion.options.map((option, optionIndex) => (
                 <button
-                  key={option.value}
+                  key={`${currentQuestion.id}-${optionIndex}`}
                   type="button"
                   className="rounded-xl border-2 border-slate-200 p-4 text-left font-medium hover:border-brand-300 hover:bg-brand-50 transition-all"
                   onClick={() => handleAnswer(option.label, option.score)}

@@ -4,8 +4,17 @@ export type ScreeningQuestion = {
   domainKo: string;
   text: string;
   type: "choice" | "input";
-  options?: { label: string; value: string; score: number }[];
+  options?: { label: string; value: string; score: number; image?: string }[];
   maxScore: number;
+  /**
+   * 음성으로만 제시하는 자극(숫자·문자열).
+   * 화면에는 표시하지 않고 1초 간격으로 또박또박 읽어 줍니다.
+   * (음성을 켜지 않았거나 지원되지 않는 기기에서는 화면에 표시됩니다.)
+   */
+  audioSequence?: string[];
+  /** 그림 이름대기 문항에 제시하는 흑백 스케치 이미지 경로 */
+  image?: string;
+  imageAlt?: string;
 };
 
 export type ScreeningTest = {
@@ -19,8 +28,8 @@ export type ScreeningTest = {
 
 export const cognitiveTest: ScreeningTest = {
   id: "cognitive-comprehensive",
-  title: "인지종합검사",
-  description: "기억력, 주의력, 언어능력 등 인지 기능 전반을 평가하는 종합 검사입니다.",
+  title: "간이인지검사",
+  description: "기억력, 주의력, 언어 등 주요 인지 기능을 간단히 확인하는 검사입니다.",
   disclaimer: "본 검사는 참고용 자가검사이며, 의료적 진단을 대체하지 않습니다. 결과에 관계없이 우려가 있으시면 전문가와 상담하세요.",
   maxScore: 30,
   questions: [
@@ -46,10 +55,10 @@ export const cognitiveTest: ScreeningTest = {
       text: "오늘 날짜가 며칠인가요?",
       type: "choice",
       options: [
-        { label: "1-7일 사이", value: "correct", score: 2 },
-        { label: "8-14일 사이", value: "nearby", score: 1 },
-        { label: "15-21일 사이", value: "nearby", score: 1 },
-        { label: "22-31일 사이", value: "wrong", score: 0 },
+        { label: "1-7일 사이", value: "d1_7", score: 2 },
+        { label: "8-14일 사이", value: "d8_14", score: 1 },
+        { label: "15-21일 사이", value: "d15_21", score: 1 },
+        { label: "22-31일 사이", value: "d22_31", score: 0 },
       ],
       maxScore: 2,
     },
@@ -104,10 +113,10 @@ export const cognitiveTest: ScreeningTest = {
       text: "다음 세 단어를 기억해주세요: 장미, 의자, 강아지. 첫 번째 단어는?",
       type: "choice",
       options: [
-        { label: "장미", value: "rose", score: 2 },
-        { label: "의자", value: "chair", score: 0 },
         { label: "강아지", value: "dog", score: 0 },
         { label: "고양이", value: "cat", score: 0 },
+        { label: "장미", value: "rose", score: 2 },
+        { label: "의자", value: "chair", score: 0 },
       ],
       maxScore: 2,
     },
@@ -118,10 +127,10 @@ export const cognitiveTest: ScreeningTest = {
       text: "두 번째 단어는?",
       type: "choice",
       options: [
-        { label: "장미", value: "rose", score: 0 },
-        { label: "의자", value: "chair", score: 2 },
-        { label: "강아지", value: "dog", score: 0 },
         { label: "고양이", value: "cat", score: 0 },
+        { label: "장미", value: "rose", score: 0 },
+        { label: "강아지", value: "dog", score: 0 },
+        { label: "의자", value: "chair", score: 2 },
       ],
       maxScore: 2,
     },
@@ -132,10 +141,10 @@ export const cognitiveTest: ScreeningTest = {
       text: "세 번째 단어는?",
       type: "choice",
       options: [
-        { label: "장미", value: "rose", score: 0 },
-        { label: "의자", value: "chair", score: 0 },
         { label: "강아지", value: "dog", score: 2 },
+        { label: "의자", value: "chair", score: 0 },
         { label: "고양이", value: "cat", score: 0 },
+        { label: "장미", value: "rose", score: 0 },
       ],
       maxScore: 2,
     },
@@ -190,10 +199,10 @@ export const cognitiveTest: ScreeningTest = {
       text: "아까 기억한 세 단어 중 첫 번째는?",
       type: "choice",
       options: [
-        { label: "장미", value: "rose", score: 2 },
         { label: "의자", value: "chair", score: 0 },
-        { label: "강아지", value: "dog", score: 0 },
         { label: "고양이", value: "cat", score: 0 },
+        { label: "강아지", value: "dog", score: 0 },
+        { label: "장미", value: "rose", score: 2 },
       ],
       maxScore: 2,
     },
@@ -204,10 +213,10 @@ export const cognitiveTest: ScreeningTest = {
       text: "아까 기억한 세 단어 중 세 번째는?",
       type: "choice",
       options: [
+        { label: "고양이", value: "cat", score: 0 },
+        { label: "강아지", value: "dog", score: 2 },
         { label: "장미", value: "rose", score: 0 },
         { label: "의자", value: "chair", score: 0 },
-        { label: "강아지", value: "dog", score: 2 },
-        { label: "고양이", value: "cat", score: 0 },
       ],
       maxScore: 2,
     },
@@ -269,13 +278,13 @@ export const mocaTest: ScreeningTest = {
       id: "moca-2",
       domain: "visuospatial_executive",
       domainKo: "시공간/실행",
-      text: "시계가 11시 10분을 가리킬 때 시침과 분침의 위치로 맞는 것은?",
+      text: "11시 10분을 바르게 가리키는 시계를 고르세요.",
       type: "choice",
       options: [
-        { label: "시침: 11시 조금 넘음, 분침: 2", value: "correct", score: 2 },
-        { label: "시침: 11시, 분침: 10", value: "wrong_1", score: 0 },
-        { label: "시침: 11시, 분침: 2", value: "wrong_2", score: 0 },
-        { label: "시침: 10시, 분침: 2", value: "wrong_3", score: 0 },
+        { label: "1번 시계", value: "c_1010", score: 0, image: "/images/screening/clock-1010.svg" },
+        { label: "2번 시계", value: "c_1110", score: 2, image: "/images/screening/clock-1110.svg" },
+        { label: "3번 시계", value: "c_0255", score: 0, image: "/images/screening/clock-0255.svg" },
+        { label: "4번 시계", value: "c_1150", score: 0, image: "/images/screening/clock-1150.svg" },
       ],
       maxScore: 2,
     },
@@ -283,7 +292,8 @@ export const mocaTest: ScreeningTest = {
       id: "moca-3",
       domain: "visuospatial_executive",
       domainKo: "시공간/실행",
-      text: "다음 숫자를 거꾸로 말하면? 5-3-9-1-7",
+      text: "들려드리는 숫자를 거꾸로 말하면 무엇인가요?",
+      audioSequence: ["5", "3", "9", "1", "7"],
       type: "choice",
       options: [
         { label: "7-1-9-3-5", value: "correct", score: 2 },
@@ -298,13 +308,15 @@ export const mocaTest: ScreeningTest = {
       id: "moca-4",
       domain: "naming",
       domainKo: "이름대기",
-      text: "털이 있고 멍멍 짖는 동물은?",
+      text: "이 동물의 이름은 무엇인가요?",
+      image: "/images/screening/animal-elephant.svg",
+      imageAlt: "코, 큰 귀, 네 다리가 보이는 동물 스케치",
       type: "choice",
       options: [
-        { label: "개", value: "dog", score: 2 },
-        { label: "고양이", value: "cat", score: 0 },
-        { label: "토끼", value: "rabbit", score: 0 },
-        { label: "새", value: "bird", score: 0 },
+        { label: "코뿔소", value: "rhino", score: 0 },
+        { label: "코끼리", value: "elephant", score: 2 },
+        { label: "하마", value: "hippo", score: 0 },
+        { label: "기린", value: "giraffe", score: 0 },
       ],
       maxScore: 2,
     },
@@ -312,13 +324,15 @@ export const mocaTest: ScreeningTest = {
       id: "moca-5",
       domain: "naming",
       domainKo: "이름대기",
-      text: "바다에 사는 큰 동물로 물을 뿜는 것은?",
+      text: "이 동물의 이름은 무엇인가요?",
+      image: "/images/screening/animal-whale.svg",
+      imageAlt: "물을 뿜고 꼬리지느러미가 있는 바다 동물 스케치",
       type: "choice",
       options: [
-        { label: "고래", value: "whale", score: 2 },
         { label: "상어", value: "shark", score: 0 },
-        { label: "돌고래", value: "dolphin", score: 0 },
         { label: "문어", value: "octopus", score: 0 },
+        { label: "고래", value: "whale", score: 2 },
+        { label: "거북이", value: "turtle", score: 0 },
       ],
       maxScore: 2,
     },
@@ -327,7 +341,8 @@ export const mocaTest: ScreeningTest = {
       id: "moca-6",
       domain: "attention",
       domainKo: "주의력",
-      text: "다음 숫자를 그대로 따라 말하세요: 2-1-8-5-4",
+      text: "들려드리는 숫자를 그대로 따라 말해 보세요. 어떤 숫자였나요?",
+      audioSequence: ["2", "1", "8", "5", "4"],
       type: "choice",
       options: [
         { label: "2-1-8-5-4", value: "correct", score: 2 },
@@ -341,7 +356,8 @@ export const mocaTest: ScreeningTest = {
       id: "moca-7",
       domain: "attention",
       domainKo: "주의력",
-      text: "다음 문자에서 '가'가 나올 때마다 손을 들으세요: 나 가 다 라 가 마 가. 몇 번인가요?",
+      text: "글자를 하나씩 읽어 드립니다. '가'가 나올 때마다 손을 드세요. 모두 몇 번이었나요?",
+      audioSequence: ["나", "가", "다", "라", "가", "마", "가"],
       type: "choice",
       options: [
         { label: "3번", value: "3", score: 3 },

@@ -72,7 +72,39 @@ function useSpeech() {
     }
   };
 
-  return { available, hasKoreanVoice, setEnabled, speak };
+  // 숫자·문자를 1초 간격으로 또박또박 읽어 줍니다.
+  const timersRef = useRef<number[]>([]);
+
+  const cancelSequence = () => {
+    timersRef.current.forEach((t) => window.clearTimeout(t));
+    timersRef.current = [];
+  };
+
+  const speakSequence = (items: string[], opts?: { startDelayMs?: number; gapMs?: number }) => {
+    if (!available || !enabledRef.current || items.length === 0) return;
+    cancelSequence();
+    const gap = opts?.gapMs ?? 1000;
+    const start = opts?.startDelayMs ?? 1200;
+
+    items.forEach((item, i) => {
+      const t = window.setTimeout(() => {
+        try {
+          const u = new SpeechSynthesisUtterance(item);
+          u.lang = "ko-KR";
+          const voice = pickKoreanVoice();
+          if (voice) u.voice = voice;
+          u.rate = 0.75; // 또박또박
+          u.pitch = 1;
+          window.speechSynthesis.speak(u);
+        } catch {
+          // ignore
+        }
+      }, start + i * gap);
+      timersRef.current.push(t);
+    });
+  };
+
+  return { available, hasKoreanVoice, setEnabled, speak, speakSequence, cancelSequence };
 }
 
 function DomainChart({ scoresByDomain }: { scoresByDomain: Record<string, { score: number; maxScore: number; label: string }> }) {
@@ -155,7 +187,13 @@ export function MocaTest() {
   const [saveNote, setSaveNote] = useState<string>("");
   const [voiceEnabled, setVoiceEnabled] = useState(false);
   const introSpokenRef = useRef(false);
-  const { available: voiceAvailable, setEnabled: setSpeechEnabled, speak } = useSpeech();
+  const {
+    available: voiceAvailable,
+    setEnabled: setSpeechEnabled,
+    speak,
+    speakSequence,
+    cancelSequence,
+  } = useSpeech();
 
   const currentQuestion = mocaTest.questions[currentIndex];
   const totalQuestions = mocaTest.questions.length;
@@ -211,13 +249,19 @@ export function MocaTest() {
   }, [voiceAvailable, voiceEnabled, speak, estimatedMinutes]);
 
   useEffect(() => {
+    cancelSequence();
     if (phase === "question" && currentQuestion) {
-      speak(`${currentIndex + 1}번. ${currentQuestion.text}`, { key: `q_${currentQuestion.id}`, force: true });
+      speak(currentQuestion.text, { key: `q_${currentQuestion.id}`, force: true });
+      if (currentQuestion.audioSequence?.length) {
+        speakSequence(currentQuestion.audioSequence);
+      }
     }
     if (phase === "result") {
       speak(`검사 완료. 총점 ${totalScore}점. ${interpretation}`, { key: "result", force: true });
     }
-  }, [phase, currentIndex, currentQuestion, speak, totalScore, interpretation]);
+    return () => cancelSequence();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, currentIndex, currentQuestion, totalScore, interpretation]);
 
   const handleAnswer = (value: string, score: number) => {
     const newAnswers = { ...answers, [currentQuestion.id]: score };
@@ -383,16 +427,70 @@ export function MocaTest() {
         <div className="space-y-4">
           <h2 className="text-xl font-semibold text-slate-900">{currentQuestion.text}</h2>
 
-          {currentQuestion.type === "choice" && currentQuestion.options ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {currentQuestion.options.map((option) => (
+          {currentQuestion.image ? (
+            <div className="flex justify-center rounded-2xl border border-slate-200 bg-white p-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={currentQuestion.image}
+                alt={currentQuestion.imageAlt ?? "동물 그림"}
+                className="h-56 w-auto max-w-full object-contain sm:h-64"
+              />
+            </div>
+          ) : null}
+
+          {currentQuestion.audioSequence?.length ? (
+            voiceEnabled && voiceAvailable ? (
+              <div className="flex flex-wrap items-center gap-3 rounded-xl border border-brand-200 bg-brand-50 p-4">
+                <span className="text-sm text-slate-700">
+                  🔊 음성으로 하나씩 읽어 드립니다. 화면에는 표시되지 않습니다.
+                </span>
                 <button
-                  key={option.value}
                   type="button"
-                  className="rounded-xl border-2 border-slate-200 p-4 text-left font-medium hover:border-brand-300 hover:bg-brand-50 transition-all"
+                  onClick={() => speakSequence(currentQuestion.audioSequence!, { startDelayMs: 300 })}
+                  className="rounded-xl border border-brand-300 bg-white px-4 py-2 text-sm font-semibold text-brand-800 hover:bg-brand-100"
+                >
+                  다시 듣기
+                </button>
+              </div>
+            ) : (
+              <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
+                <p className="text-sm leading-6 text-amber-900">
+                  음성이 꺼져 있어 아래 내용을 화면으로 보여 드립니다. 음성을 켜면
+                  하나씩 읽어 드립니다.
+                </p>
+                <p className="mt-2 text-lg font-bold tracking-widest text-slate-900">
+                  {currentQuestion.audioSequence.join(" ")}
+                </p>
+              </div>
+            )
+          ) : null}
+
+          {currentQuestion.type === "choice" && currentQuestion.options ? (
+            <div key={currentQuestion.id} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {currentQuestion.options.map((option, optionIndex) => (
+                <button
+                  key={`${currentQuestion.id}-${optionIndex}`}
+                  type="button"
+                  className={
+                    option.image
+                      ? "flex flex-col items-center gap-2 rounded-xl border-2 border-slate-200 p-3 font-medium transition-all hover:border-brand-300 hover:bg-brand-50"
+                      : "rounded-xl border-2 border-slate-200 p-4 text-left font-medium transition-all hover:border-brand-300 hover:bg-brand-50"
+                  }
                   onClick={() => handleAnswer(option.label, option.score)}
                 >
-                  {option.label}
+                  {option.image ? (
+                    <>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={option.image}
+                        alt={option.label}
+                        className="h-36 w-auto object-contain sm:h-40"
+                      />
+                      <span className="text-sm text-slate-700">{option.label}</span>
+                    </>
+                  ) : (
+                    option.label
+                  )}
                 </button>
               ))}
             </div>

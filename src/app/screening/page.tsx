@@ -20,8 +20,8 @@ const tests = [
   },
   {
     href: "/screening/cognitive",
-    title: "인지종합검사",
-    desc: "기억력, 주의력, 언어 등 6개 영역 종합 평가 (15문항)."
+    title: "간이인지검사",
+    desc: "기억력, 주의력, 언어 등 6개 영역 간단 확인 (15문항)."
   },
   {
     href: "/screening/moca",

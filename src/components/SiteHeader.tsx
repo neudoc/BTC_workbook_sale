@@ -40,12 +40,12 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-5 text-lg font-medium text-slate-700 lg:flex">
+        <nav className="hidden items-center gap-1.5 text-base font-medium text-slate-700 lg:flex xl:gap-2 xl:text-lg">
           {navItems.map((item) =>
             item.external ? (
               <a
                 key={item.href}
-                className="inline-flex items-center rounded outline-none transition-colors hover:text-brand-700 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2"
+                className="inline-flex items-center whitespace-nowrap rounded-full bg-brand-25 px-3 py-2 outline-none transition-colors hover:bg-brand-100 hover:text-brand-800 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 xl:px-4"
                 href={item.href}
                 target="_blank"
                 rel="noreferrer"
@@ -55,7 +55,7 @@ export function SiteHeader() {
             ) : (
               <Link
                 key={item.href}
-                className="inline-flex items-center rounded outline-none transition-colors hover:text-brand-700 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2"
+                className="inline-flex items-center whitespace-nowrap rounded-full bg-brand-25 px-3 py-2 outline-none transition-colors hover:bg-brand-100 hover:text-brand-800 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 xl:px-4"
                 href={item.href}
               >
                 {item.label}
@@ -96,7 +96,7 @@ export function SiteHeader() {
 
           <Link
             href="/cart"
-            className="relative hidden items-center justify-center rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700 outline-none hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 sm:inline-flex"
+            className="relative hidden items-center justify-center whitespace-nowrap rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700 outline-none hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 sm:inline-flex"
           >
             장바구니
             <CartBadge />
@@ -105,14 +105,14 @@ export function SiteHeader() {
           {session ? (
             <Link
               href="/mypage"
-              className="hidden items-center justify-center rounded-xl bg-slate-900 px-3 py-2 text-sm font-semibold text-white outline-none hover:bg-black focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 sm:inline-flex"
+              className="hidden items-center justify-center whitespace-nowrap rounded-xl bg-slate-900 px-3 py-2 text-sm font-semibold text-white outline-none hover:bg-black focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 sm:inline-flex"
             >
               내 정보
             </Link>
           ) : (
             <Link
               href="/login"
-              className="hidden items-center justify-center rounded-xl bg-brand-700 px-3 py-2 text-sm font-semibold text-white outline-none hover:bg-brand-800 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 sm:inline-flex"
+              className="hidden items-center justify-center whitespace-nowrap rounded-xl bg-brand-700 px-3 py-2 text-sm font-semibold text-white outline-none hover:bg-brand-800 focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 sm:inline-flex"
             >
               로그인
             </Link>

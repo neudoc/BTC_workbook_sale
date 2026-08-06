@@ -6,6 +6,8 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
+          // 파스텔 그린 (메뉴 칩 배경 등 아주 옅은 톤)
+          25: "#f0f6ec",
           50: "#f2f8f5",
           100: "#ddefe6",
           200: "#b9dfcd",

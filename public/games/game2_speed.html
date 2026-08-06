@@ -40,23 +40,24 @@
     const levelsData = [
         {
             level: 1,
-            colors: ['red', 'blue'],
+            colors: ['red', 'blue', 'yellow'],
             trials: 7,
-            instruction: "가운데 사물의 색깔을 보고<br>알맞은 색깔 버튼을 누르세요!",
+            instruction: "버튼의 <b>글자와 색이 같습니다.</b><br>가운데 그림과 <b>같은 색</b>의 버튼을 누르세요!",
             stroop: false
         },
         {
             level: 2,
-            colors: ['red', 'blue', 'yellow'],
+            colors: ['red', 'blue'],
             trials: 7,
-            instruction: "세 가지 색깔이 등장합니다.<br>사물의 색깔을 정확히 맞춰보세요!",
-            stroop: false
+            instruction: "이번에는 버튼의 <b>글자와 버튼 색이 다릅니다!</b><br>버튼 색은 무시하고, 그림의 색을 <b>'글자'</b>로 적어 놓은 버튼을 누르세요!",
+            stroop: true,
+            stroopTarget: 'text'
         },
         {
             level: 3,
             colors: ['red', 'blue'],
             trials: 7,
-            instruction: "버튼의 배경색과 글자가 다릅니다!<br><b>'버튼 색'</b>이 사물의 색인 버튼을 누르세요!",
+            instruction: "이번엔 반대입니다!<br>글자는 무시하고, <b>'버튼 색'</b>이 그림의 색인 버튼을 누르세요!",
             stroop: true,
             stroopTarget: 'color'
         },
@@ -64,7 +65,7 @@
             level: 4,
             colors: ['red', 'blue'],
             trials: 7,
-            instruction: "글자 색상과 단어 의미가 다릅니다!<br><b>'글자(의미)'</b>가 사물의 색인 글자를 누르세요!",
+            instruction: "마지막입니다!<br>글자의 색이 아니라 <b>'글자의 뜻'</b>이 그림의 색인 것을 누르세요!",
             stroop: true,
             stroopTarget: 'text',
             textOnly: true,

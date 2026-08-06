@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageTitle } from "@/components/ui/PageTitle";
+import { GameList } from "@/components/games/GameList";
 
 export const metadata: Metadata = {
   title: "두뇌 게임",
@@ -75,41 +76,13 @@ export default function GamesPage() {
           에서 변화를 확인할 수 있습니다. 로그인하면 계정에 저장되어 다른 기기에서도
           이어서 볼 수 있습니다.
         </p>
+        <p className="mt-2 text-sm leading-6 text-slate-700">
+          게임은 <strong>한 번에 하나씩</strong> 열립니다. 앞의 게임을 시작하면 다음
+          게임이 열리니, 순서대로 천천히 진행해 보세요.
+        </p>
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {games.map((g) => (
-          <a
-            key={g.href}
-            href={g.href}
-            target="_blank"
-            rel="noreferrer"
-            className="group flex flex-col overflow-hidden rounded-[18px] border border-slate-200 bg-white shadow-sm transition hover:border-brand-300 hover:shadow-md"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={g.thumb}
-              alt={`${g.title} 미리보기`}
-              width={320}
-              height={180}
-              loading="lazy"
-              className="aspect-[16/9] w-full border-b border-slate-100 bg-slate-50 object-cover"
-            />
-            <div className="flex flex-1 flex-col p-6">
-            <span className="inline-flex w-fit items-center rounded-full bg-brand-100 px-3 py-1 text-xs font-bold text-brand-800">
-              {g.domain}
-            </span>
-            <h2 className="mt-3 text-lg font-bold text-slate-950 transition group-hover:text-brand-700">
-              {g.title}
-            </h2>
-            <p className="mt-2 flex-1 text-sm leading-6 text-slate-600">{g.desc}</p>
-            <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-brand-700">
-              게임 시작 <span aria-hidden>→</span>
-            </span>
-            </div>
-          </a>
-        ))}
-      </div>
+      <GameList games={games} />
 
       <p className="text-xs leading-6 text-slate-500">
         ※ 게임은 새 창에서 열립니다. 소리가 나올 수 있으니 필요하면 기기 음량을

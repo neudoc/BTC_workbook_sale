@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>시각 기억 테스트</title>
+
+    <link type="text/css" rel="stylesheet" href="./assets/recall/css/demo.css"/>
+    <link type="text/css" rel="stylesheet" href="./assets/recall/css/weatherGame.css"/>
+
+    <script type="text/javascript" src="./assets/recall/js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="./assets/recall/js/support.js"></script>
+    <script type="text/javascript" src="./assets/recall/js/customdialog.js"></script>
+    <script type="text/javascript" src="./assets/recall/js/weatherGame.js"></script>
+    <script type="text/javascript" src="./assets/recall/js/weatherG.js"></script>
+
+    <style>
+        .btn-home {
+            background-color: #62baa0;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+        .btn-home:hover {
+            background-color: #4a9e86;
+        }
+        #game_hrader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #game_hrader .header-left {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="game_hrader">
+    <div class="header-left">
+        <img src="./assets/recall/img/back.png" id="backBtn" style="cursor: pointer; margin-right: 10px;">
+        <span>퍼즐 게임</span>
+    </div>
+    <button class="btn-home" onclick="goHome()">🏠 홈으로</button>
+</div>
+
+<script>
+    document.getElementById("backBtn").addEventListener("click", function () {
+        window.history.length > 1 ? window.history.back() : window.location.href = "index.html";
+    });
+
+    function goHome() {
+        if(isInGame) {
+            window.sendScore(4, lever * 10, scroe);
+        }
+        window.location.href = 'index.html';
+    }
+
+    window.sendScore = function(gameType, score, errors) {
+        if (window.btcSaveTraining) { var _lbl = '점수 ' + score + '점' + ((typeof errors !== 'undefined' && errors !== null && errors !== '') ? ' · 실수 ' + errors + '회' : ''); window.btcSaveTraining(window.btcGameName(gameType), _lbl); }
+    };
+</script>
+
+<div id="game_content">
+    <div id="imgArea"></div>
+    <div id="game_reward"><span id="game_reward_tips">결과: </span><span id="gameAnswer"></span></div>
+</div>
+<div id="game_c">
+    <div id="game_control">
+        <span id="btn">시작</span>
+        <span id="level">레벨</span>
+        <span id="scroe">시도 0</span>
+    </div>
+</div>
+
+<div id="game_footer">
+    <ul id="img_list">
+        <li class="select"><img src="./assets/recall/img/img1.png" class='imgcontent'></li>
+        <li><img src="./assets/recall/img/img2.png" class='imgcontent'></li>
+        <li><img src="./assets/recall/img/img3.png" class='imgcontent'></li>
+        <li><img src="./assets/recall/img/img4.png" class='imgcontent'></li>
+        <li><img src="./assets/recall/img/img5.png" class='imgcontent'></li>
+        <li><img src="./assets/recall/img/img6.png" class='imgcontent'></li>
+    </ul>
+</div>
+  <script src="./btc-bridge.js"></script>
+</body>
+</html>

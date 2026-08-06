@@ -97,6 +97,24 @@ export const trainingStorage = {
     const all = this.getAll();
     all.unshift(record);
     localStorage.setItem(TRAINING_KEY, JSON.stringify(all));
+
+    // 로그인 상태라면 계정에도 저장해 다른 기기에서 확인할 수 있게 합니다.
+    // (비로그인·오프라인이면 조용히 무시되고 이 기기 기록은 그대로 유지)
+    try {
+      void fetch("/api/training", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({
+          gameType: record.game,
+          score: 0,
+          duration: 0,
+          resultJson: JSON.stringify({ label: record.scoreLabel })
+        })
+      }).catch(() => undefined);
+    } catch {
+      /* 서버 저장 실패는 무시 */
+    }
   }
 };
 

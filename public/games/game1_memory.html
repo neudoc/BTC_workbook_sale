@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기억의 서랍 (레벨 1)</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Malgun Gothic', sans-serif; background-color: #f4f7f6; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        .container { text-align: center; max-width: 400px; width: 100%; padding: 20px; box-sizing: border-box; }
+        h1 { font-size: 28px; color: #333; margin-bottom: 10px; }
+        p.desc { font-size: 18px; color: #555; }
+        .display-area { font-size: 60px; margin: 20px 0; min-height: 100px; display: flex; justify-content: center; align-items: center; background: white; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); flex-wrap: wrap; padding: 10px; }
+        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); gap: 10px; margin-top: 20px; display: none; width: 100%; justify-content: center; }
+        .option-btn { font-size: 40px; padding: 10px; border: none; border-radius: 12px; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; min-height: 70px; }
+        .option-btn:active { transform: scale(0.95); }
+        .btn-start { font-size: 24px; padding: 15px 40px; border: none; border-radius: 50px; background-color: #4CAF50; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.2); cursor: pointer; font-weight: bold; width: 100%; }
+        #feedback { font-size: 24px; font-weight: bold; margin-top: 20px; height: 30px; }
+        .hidden { display: none !important; }
+        .wrong { animation: shake 0.5s; background-color: #ffebee; }
+        @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } 100% { transform: translateX(0); } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 id="title">기억의 서랍</h1>
+    <p class="desc" id="instruction">잠시 후 나타나는 물건들을 잘 기억해 주세요!</p>
+    
+    <div class="display-area" id="displayArea">
+        <button class="btn-start" id="startBtn" onclick="startGame()">시작하기</button>
+    </div>
+
+    <div class="options-grid" id="optionsArea"></div>
+
+    <div id="feedback"></div>
+</div>
+
+<script>
+    const levels = [
+        { show: ['🍎', '☂️'], options: ['🍎', '👓', '☂️', '👞'], targets: ['🍎', '☂️'] },
+        { show: ['🚲', '⏰', '⚽'], options: ['🪑', '🚲', '✏️', '⏰', '⚽', '🎸'], targets: ['🚲', '⏰', '⚽'] },
+        { show: ['🧢', '☕', '🌻', '🎁'], options: ['☕', '🧢', '🧤', '☎️', '🌻', '🎁', '🎈', '🧸'], targets: ['🧢', '☕', '🌻', '🎁'] },
+        { show: ['🚀', '🍕', '🔑', '🎨', '🌙'], options: ['🚀', '🍔', '🍕', '🔑', '🚗', '🎨', '🌙', '⭐', '📷', '📱'], targets: ['🚀', '🍕', '🔑', '🎨', '🌙'] },
+        { show: ['🐶', '🍉', '💎', '🚁', '🍔', '🔥'], options: ['🐶', '🍉', '💎', '🚁', '🍔', '🔥', '🐱', '🍇', '💍', '✈️', '🍣', '💧'], targets: ['🐶', '🍉', '💎', '🚁', '🍔', '🔥'] }
+    ];
+
+    let currentLevel = 0;
+    let foundCount = 0;
+    let errorCount = 0;
+    
+    const displayArea = document.getElementById('displayArea');
+    const optionsArea = document.getElementById('optionsArea');
+    const instruction = document.getElementById('instruction');
+    const feedback = document.getElementById('feedback');
+
+    function startGame() {
+        if(currentLevel >= levels.length) {
+            endGame();
+            return;
+        }
+        foundCount = 0;
+        optionsArea.innerHTML = '';
+        optionsArea.style.display = 'none';
+        feedback.textContent = '';
+        feedback.style.color = 'black';
+        
+        let levelData = levels[currentLevel];
+        let memoryTime = 2000 + (levelData.targets.length * 1000); // 4s, 5s, 6s...
+        
+        instruction.textContent = `물건을 잘 기억하세요! (${memoryTime/1000}초)`;
+        displayArea.innerHTML = levelData.show.map(item => `<span style="margin: 5px;">${item}</span>`).join('');
+
+        setTimeout(() => {
+            instruction.textContent = `조금 전 보았던 ${levelData.targets.length}가지를 모두 찾아주세요.`;
+            displayArea.innerHTML = '<span style="font-size:60px;">📦</span>'; // 서랍 모양
+            showOptions(levelData);
+        }, memoryTime);
+    }
+
+    function showOptions(data) {
+        optionsArea.style.display = 'grid';
+        data.options.forEach(item => {
+            let btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.textContent = item;
+            btn.onclick = () => checkAnswer(btn, item, data.targets);
+            optionsArea.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(btn, item, targets) {
+        if(btn.disabled) return;
+
+        if (targets.includes(item)) {
+            btn.style.backgroundColor = '#e8f5e9'; // 성공
+            btn.disabled = true;
+            foundCount++;
+            feedback.style.color = 'green';
+
+            if (foundCount === targets.length) {
+                // 목표를 모두 찾았을 때만 성공 메시지
+                feedback.textContent = "맞았습니다! 🎉";
+                currentLevel++;
+                setTimeout(() => {
+                    feedback.textContent = "";
+                    startGame();
+                }, 1500);
+            } else {
+                // 아직 남았으면 진행 상황만 안내
+                feedback.textContent = `좋아요! ${foundCount} / ${targets.length}개 찾았어요.`;
+            }
+        } else {
+            errorCount++;
+            btn.classList.add('wrong');
+            feedback.textContent = "아이고, 다시 한번 골라볼까요? 🤔";
+            feedback.style.color = 'red';
+            setTimeout(() => {
+                btn.classList.remove('wrong');
+            }, 500);
+        }
+    }
+
+    function endGame() {
+        sendScore(1, currentLevel, errorCount);
+        instruction.textContent = "수고하셨습니다!";
+        displayArea.innerHTML = '<span style="font-size:40px;">🏆</span>';
+        optionsArea.style.display = 'none';
+        feedback.textContent = "참 잘했어요! 내일 또 만나요.";
+        feedback.style.color = 'blue';
+        let btn = document.createElement('button');
+        btn.className = 'btn-start';
+        btn.textContent = "홈으로 돌아가기";
+        btn.style.marginTop = "20px";
+        btn.onclick = () => window.location.href = "index.html";
+        document.querySelector('.container').appendChild(btn);
+    }
+    function sendScore(gameType, score, errors) {
+        if (window.btcSaveTraining) { var _lbl = '점수 ' + score + '점' + ((typeof errors !== 'undefined' && errors !== null && errors !== '') ? ' · 실수 ' + errors + '회' : ''); window.btcSaveTraining(window.btcGameName(gameType), _lbl); }
+    }
+</script>
+
+  <script src="./btc-bridge.js"></script>
+</body>
+</html>

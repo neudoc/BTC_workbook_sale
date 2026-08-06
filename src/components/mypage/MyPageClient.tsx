@@ -25,8 +25,47 @@ export function MyPageClient({ session }: { session: Session }) {
 
   useEffect(() => {
     setOrders(orderStorage.getAll());
-    setTraining(trainingStorage.getAll());
     setScreening(screeningStorage.getAll());
+
+    const local = trainingStorage.getAll();
+    setTraining(local);
+
+    // 계정에 저장된 기록(서버)과 이 기기 기록을 합쳐서 보여 줍니다.
+    fetch("/api/training", { credentials: "same-origin" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((rows) => {
+        if (!Array.isArray(rows)) return;
+        const fromServer: TrainingRecord[] = rows.map(
+          (r: { id: number; gameType: string; score: number; playedAt: string; resultJson: string | null }) => {
+            let label = `점수 ${r.score}점`;
+            try {
+              const parsed = r.resultJson ? JSON.parse(r.resultJson) : null;
+              if (parsed?.label) label = String(parsed.label);
+            } catch {
+              /* 기본 라벨 사용 */
+            }
+            return {
+              id: `srv_${r.id}`,
+              createdAt: r.playedAt,
+              game: r.gameType,
+              scoreLabel: label,
+            };
+          }
+        );
+        // 같은 기록이 양쪽에 있을 수 있어 시각+게임명으로 중복 제거
+        const seen = new Set<string>();
+        const merged = [...fromServer, ...local].filter((rec) => {
+          const key = `${rec.game}|${rec.scoreLabel}|${rec.createdAt.slice(0, 16)}`;
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
+        merged.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+        setTraining(merged);
+      })
+      .catch(() => {
+        /* 비로그인·오프라인이면 이 기기 기록만 표시 */
+      });
   }, []);
 
   return (
@@ -36,8 +75,9 @@ export function MyPageClient({ session }: { session: Session }) {
         <p className="mt-2 text-slate-700">
           {session.name}님 · 권한: <span className="font-mono">{session.role}</span>
         </p>
-        <p className="mt-2 text-xs text-slate-600">
-          이 페이지의 기록은 브라우저 로컬 저장 기반 데모입니다.
+        <p className="mt-2 text-xs leading-5 text-slate-600">
+          인지훈련·게임 기록은 계정에 저장되어 다른 기기에서도 확인할 수 있습니다.
+          주문·자가점검 기록은 현재 이 기기에만 저장됩니다.
         </p>
       </div>
 

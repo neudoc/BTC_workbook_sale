@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>색깔 맞추기 (스피드 & 스트룹)</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Malgun Gothic', sans-serif; background-color: #f4f7f6; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        .container { text-align: center; max-width: 400px; width: 100%; padding: 20px; box-sizing: border-box; }
+        h1 { font-size: 28px; color: #333; margin-bottom: 5px; }
+        p.desc { font-size: 18px; color: #555; margin-bottom: 20px; line-height: 1.4; height: 50px; }
+        .image-area { font-size: 120px; height: 180px; display: flex; justify-content: center; align-items: center; transition: transform 0.2s; }
+        .button-area { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 30px; }
+        .color-btn { height: 100px; font-size: 24px; font-weight: bold; color: white; border: none; border-radius: 15px; cursor: pointer; box-shadow: 0 6px 0 rgba(0,0,0,0.2); transition: all 0.1s; display: flex; justify-content: center; align-items: center; }
+        .color-btn:active { transform: translateY(6px); box-shadow: none; }
+        .btn-red { background-color: #e53935; box-shadow: 0 6px 0 #b71c1c; }
+        .btn-blue { background-color: #1e88e5; box-shadow: 0 6px 0 #0d47a1; }
+        .btn-yellow { background-color: #ffca28; color: #333; box-shadow: 0 6px 0 #f57f17; text-shadow: none; }
+        .btn-green { background-color: #43a047; box-shadow: 0 6px 0 #1b5e20; }
+        .btn-start { font-size: 24px; padding: 15px 40px; border: none; border-radius: 50px; background-color: #4CAF50; color: white; display: inline-block; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.2);}
+        #feedback { font-size: 22px; font-weight: bold; margin-top: 20px; height: 30px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 id="levelTitle">색깔 맞추기</h1>
+    <p class="desc" id="instruction">사물의 원래 색깔을 보고<br>알맞은 버튼을 빠르게 누르세요!</p>
+    
+    <div class="image-area" id="imageArea">
+        <button class="btn-start" id="startBtn" onclick="startGame()">시작하기</button>
+    </div>
+
+    <div class="button-area" id="buttonArea" style="display: none;"></div>
+
+    <div id="feedback"></div>
+</div>
+
+<script>
+    const levelsData = [
+        {
+            level: 1,
+            colors: ['red', 'blue'],
+            trials: 7,
+            instruction: "가운데 사물의 색깔을 보고<br>알맞은 색깔 버튼을 누르세요!",
+            stroop: false
+        },
+        {
+            level: 2,
+            colors: ['red', 'blue', 'yellow'],
+            trials: 7,
+            instruction: "세 가지 색깔이 등장합니다.<br>사물의 색깔을 정확히 맞춰보세요!",
+            stroop: false
+        },
+        {
+            level: 3,
+            colors: ['red', 'blue'],
+            trials: 7,
+            instruction: "버튼의 배경색과 글자가 다릅니다!<br><b>'버튼 색'</b>이 사물의 색인 버튼을 누르세요!",
+            stroop: true,
+            stroopTarget: 'color'
+        },
+        {
+            level: 4,
+            colors: ['red', 'blue'],
+            trials: 7,
+            instruction: "글자 색상과 단어 의미가 다릅니다!<br><b>'글자(의미)'</b>가 사물의 색인 글자를 누르세요!",
+            stroop: true,
+            stroopTarget: 'text',
+            textOnly: true,
+            shufflePerTrial: true
+        }
+    ];
+
+    const ITEMS = [
+        { emoji: '🍎', color: 'red' },
+        { emoji: '🌶️', color: 'red' },
+        { emoji: '🍓', color: 'red' },
+        { emoji: '🌊', color: 'blue' },
+        { emoji: '📘', color: 'blue' },
+        { emoji: '👖', color: 'blue' },
+        { emoji: '🍌', color: 'yellow' },
+        { emoji: '🌻', color: 'yellow' },
+        { emoji: '🍋', color: 'yellow' }
+    ];
+
+    const BUTTONS = {
+        'red': { class: 'btn-red', text: '빨강', hex: '#e53935' },
+        'blue': { class: 'btn-blue', text: '파랑', hex: '#1e88e5' },
+        'yellow': { class: 'btn-yellow', text: '노랑', hex: '#ffca28' }
+    };
+
+    let currentLevelIdx = 0;
+    let currentTrial = 0;
+    let errorCount = 0;
+    let currentTargetColor = '';
+    
+    const imageArea = document.getElementById('imageArea');
+    const buttonArea = document.getElementById('buttonArea');
+    const feedback = document.getElementById('feedback');
+    const startBtn = document.getElementById('startBtn');
+    const instruction = document.getElementById('instruction');
+    const levelTitle = document.getElementById('levelTitle');
+
+    function startGame() {
+        startBtn.style.display = 'none';
+        buttonArea.style.display = 'grid';
+        currentLevelIdx = 0;
+        currentTrial = 0;
+        errorCount = 0;
+        startLevel();
+    }
+
+    function startLevel() {
+        if(currentLevelIdx >= levelsData.length) {
+            endGame();
+            return;
+        }
+        let lvl = levelsData[currentLevelIdx];
+        levelTitle.textContent = `색깔 맞추기 (레벨 ${lvl.level})`;
+        instruction.innerHTML = lvl.instruction;
+        currentTrial = 0;
+        
+        buttonArea.innerHTML = '';
+        
+        if (lvl.stroop) {
+            // Mismatched buttons logic for Level 3 & 4
+            let btns = [
+                { bg: 'red', txt: 'blue' },
+                { bg: 'blue', txt: 'red' }
+            ];
+            btns.sort(() => Math.random() - 0.5); // Shuffle button order
+            
+            btns.forEach(b => {
+                let btn = document.createElement('button');
+                
+                if (lvl.textOnly) {
+                    btn.className = `color-btn`;
+                    btn.style.backgroundColor = 'transparent';
+                    btn.style.boxShadow = 'none';
+                    btn.style.color = BUTTONS[b.bg].hex; 
+                    btn.style.fontSize = '42px';
+                    btn.style.fontWeight = '900';
+                    btn.textContent = BUTTONS[b.txt].text;
+                } else {
+                    btn.className = `color-btn ${BUTTONS[b.bg].class}`;
+                    btn.textContent = BUTTONS[b.txt].text;
+                }
+                
+                // Determine what this button represents to check answer
+                let expectedColor = (lvl.stroopTarget === 'text') ? b.txt : b.bg;
+                btn.onclick = () => checkAnswer(expectedColor);
+                buttonArea.appendChild(btn);
+            });
+        } else {
+            // Normal buttons for Level 1 & 2
+            lvl.colors.forEach(col => {
+                let btn = document.createElement('button');
+                btn.className = `color-btn ${BUTTONS[col].class}`;
+                btn.textContent = BUTTONS[col].text;
+                btn.onclick = () => checkAnswer(col);
+                buttonArea.appendChild(btn);
+            });
+        }
+
+        imageArea.innerHTML = `<span style="font-size: 20px; color: #777;">준비하세요!</span>`;
+        if (currentLevelIdx === 0) {
+            setTimeout(showQuestion, 1000);
+        } else {
+            setTimeout(showQuestion, 2000); // 2 second pause for reading instructions
+        }
+    }
+
+    function showQuestion() {
+        let lvl = levelsData[currentLevelIdx];
+        if(currentTrial >= lvl.trials) {
+            currentLevelIdx++;
+            feedback.textContent = "";
+            startLevel();
+            return;
+        }
+        
+        feedback.textContent = '';
+        
+        if (lvl.shufflePerTrial) {
+            let btns = Array.from(buttonArea.children);
+            btns.sort(() => Math.random() - 0.5);
+            btns.forEach(btn => buttonArea.appendChild(btn));
+        }
+        
+        let validItems = ITEMS.filter(item => lvl.colors.includes(item.color));
+        let randomItem = validItems[Math.floor(Math.random() * validItems.length)];
+        
+        currentTargetColor = randomItem.color;
+        imageArea.innerHTML = randomItem.emoji;
+    }
+
+    function checkAnswer(selectedColor) {
+        if (!currentTargetColor) return;
+
+        if (selectedColor === currentTargetColor) {
+            feedback.textContent = "정답! 👏";
+            feedback.style.color = 'green';
+            currentTrial++;
+            
+            currentTargetColor = ''; 
+            imageArea.innerHTML = `<div style="width:100px; height:100px; border-radius:50%; background:#ddd; display:inline-block;"></div>`;
+            setTimeout(showQuestion, 400); 
+        } else {
+            errorCount++;
+            feedback.textContent = `아차, 틀렸습니다! 다시 누르세요.`;
+            feedback.style.color = 'red';
+            let img = imageArea;
+            img.style.transform = 'translateX(-10px)';
+            setTimeout(() => img.style.transform = 'translateX(10px)', 100);
+            setTimeout(() => img.style.transform = 'translateX(0)', 200);
+        }
+    }
+
+    function endGame() {
+        let totalTrials = levelsData.reduce((acc, l) => acc + l.trials, 0);
+        sendScore(2, totalTrials * 10, errorCount); // e.g. 160 points max
+        imageArea.innerHTML = '<span style="font-size:100px;">🏆</span>';
+        buttonArea.style.display = 'none';
+        instruction.innerHTML = "순발력과 집중력이 대단하시네요!";
+        levelTitle.textContent = "모든 레벨 완료";
+        feedback.textContent = "";
+        
+        let btn = document.createElement('button');
+        btn.className = 'btn-start';
+        btn.textContent = "다음 게임으로";
+        btn.onclick = () => window.location.href = "game3_visual.html";
+        document.querySelector('.container').appendChild(btn);
+    }
+
+    function sendScore(gameType, score, errors) {
+        if (window.btcSaveTraining) { var _lbl = '점수 ' + score + '점' + ((typeof errors !== 'undefined' && errors !== null && errors !== '') ? ' · 실수 ' + errors + '회' : ''); window.btcSaveTraining(window.btcGameName(gameType), _lbl); }
+    }
+</script>
+
+  <script src="./btc-bridge.js"></script>
+</body>
+</html>

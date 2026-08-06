@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기억력 & 집중력 챌린지</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Pretendard', sans-serif; background: linear-gradient(135deg, #212121, #424242); display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; color: white; }
+        .container { text-align: center; max-width: 450px; width: 100%; padding: 25px; box-sizing: border-box; background: rgba(0, 0, 0, 0.6); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
+        h1 { font-size: 24px; color: #ffeb3b; margin-bottom: 5px; font-weight: 800; }
+        .tabs { display: flex; justify-content: center; margin-bottom: 20px; border-bottom: 2px solid #555; }
+        .tab { padding: 8px 15px; color: #999; font-weight: bold; font-size: 14px; }
+        .tab.active { color: #ffeb3b; border-bottom: 3px solid #ffeb3b; }
+        .display-area { background: #000; height: 120px; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 45px; letter-spacing: 5px; margin-bottom: 20px; box-shadow: inset 0 0 15px rgba(255,255,255,0.1); word-break: break-all; padding: 0 10px; }
+        .input-area { margin-bottom: 20px; display: none; }
+        .input-area input { width: 100%; padding: 15px; font-size: 20px; text-align: center; border-radius: 8px; border: none; outline: none; background: #333; color: white; margin-bottom: 10px; }
+        .input-area input:focus { border: 2px solid #ffeb3b; }
+        .btn-action { font-size: 18px; padding: 14px 0; border: none; border-radius: 50px; background-color: #fbc02d; color: #212121; cursor: pointer; font-weight: bold; width: 100%; transition: background 0.3s; margin-bottom: 10px; }
+        .btn-action:hover { background-color: #f9a825; }
+        .btn-home { background-color: #616161; color: white; }
+        .btn-home:hover { background-color: #424242; }
+        .timer { font-size: 14px; color: #ff5252; font-weight: bold; margin-bottom: 10px; height: 20px; }
+        #msg { font-size: 16px; margin-bottom: 15px; font-weight: 500; height: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>집중력 플래시 챌린지 ⚡</h1>
+    <div class="tabs">
+        <div class="tab active" id="tab-0">01 숫자</div>
+        <div class="tab" id="tab-1">02 단어</div>
+        <div class="tab" id="tab-2">03 카운트</div>
+    </div>
+    
+    <div class="timer" id="timer"></div>
+    
+    <div class="display-area" id="displayArea">
+        준비되셨나요?
+    </div>
+    
+    <div class="input-area" id="inputArea">
+        <input type="text" id="answerInput" placeholder="정답 입력" autocomplete="off">
+        <button class="btn-action" onclick="submitAnswer()">제출하기</button>
+    </div>
+    
+    <div id="msg">화면에 집중하고 기억하세요.</div>
+    
+    <button class="btn-action" id="startBtn" onclick="startStage()">▶ 시작하기</button>
+    <button class="btn-action btn-home" onclick="goHome()">🏠 홈으로</button>
+</div>
+
+<script>
+    const displayArea = document.getElementById('displayArea');
+    const inputArea = document.getElementById('inputArea');
+    const answerInput = document.getElementById('answerInput');
+    const startBtn = document.getElementById('startBtn');
+    const msg = document.getElementById('msg');
+    const timerDisplay = document.getElementById('timer');
+    
+    const wordsList = ["사과", "바다", "하늘", "나무", "자동차", "피아노", "시계", "구름"];
+    
+    let currentStage = 0;
+    let targetAnswer = "";
+    let isPlaying = false;
+    let score = 0;
+    let errors = 0;
+    let timerId = null;
+    
+    function startStage() {
+        if(isPlaying) return;
+        isPlaying = true;
+        
+        switchTab(currentStage);
+        startBtn.style.display = 'none';
+        inputArea.style.display = 'none';
+        answerInput.value = '';
+        msg.textContent = "7초 동안 기억하세요!";
+        msg.style.color = "#fff";
+        
+        if (currentStage === 0) {
+            // 숫자 5자리
+            targetAnswer = Math.floor(10000 + Math.random() * 90000).toString();
+            displayArea.innerHTML = targetAnswer.split('').join(' ');
+            answerInput.placeholder = "본 숫자를 입력하세요";
+            answerInput.type = "number";
+        } else if (currentStage === 1) {
+            // 단어 3개
+            let w = [];
+            while(w.length < 3) {
+                let rw = wordsList[Math.floor(Math.random()*wordsList.length)];
+                if(!w.includes(rw)) w.push(rw);
+            }
+            targetAnswer = w.join('');
+            displayArea.innerHTML = w.join(', ');
+            displayArea.style.fontSize = '30px';
+            answerInput.placeholder = "띄어쓰기 없이 순서대로 입력";
+            answerInput.type = "text";
+        } else if (currentStage === 2) {
+            // 카운트 (특정 이모지 개수 세기)
+            let emojis = ['🍎', '🍎', '🍎', '🍊', '🍊', '🍇'];
+            emojis.sort(() => Math.random() - 0.5); // shuffle
+            // 3~6 사과
+            let appleCount = Math.floor(Math.random() * 4) + 3;
+            let temp = [];
+            for(let i=0; i<appleCount; i++) temp.push('🍎');
+            for(let i=0; i<(9-appleCount); i++) temp.push('🍋');
+            temp.sort(() => Math.random() - 0.5);
+            
+            targetAnswer = appleCount.toString();
+            displayArea.innerHTML = temp.join('');
+            displayArea.style.fontSize = '40px';
+            answerInput.placeholder = "🍎 사과의 개수는?";
+            answerInput.type = "number";
+        }
+        
+        // 7초 타이머
+        let timeLeft = 7;
+        timerDisplay.textContent = `남은 시간: ${timeLeft}초`;
+        timerId = setInterval(() => {
+            timeLeft--;
+            timerDisplay.textContent = `남은 시간: ${timeLeft}초`;
+            if(timeLeft <= 0) {
+                clearInterval(timerId);
+                timerDisplay.textContent = "";
+                showInput();
+            }
+        }, 1000);
+    }
+    
+    function showInput() {
+        displayArea.innerHTML = '???';
+        displayArea.style.fontSize = '45px';
+        msg.textContent = "기억한 것을 입력 후 제출하세요!";
+        inputArea.style.display = 'block';
+        answerInput.focus();
+    }
+    
+    function submitAnswer() {
+        let val = answerInput.value.trim().replace(/,/g, '');
+        if(val === targetAnswer) {
+            msg.textContent = "정답입니다! 👏";
+            msg.style.color = "#4caf50";
+            score++;
+        } else {
+            msg.textContent = `오답입니다! 정답은: ${targetAnswer}`;
+            msg.style.color = "#f44336";
+            errors++;
+        }
+        
+        inputArea.style.display = 'none';
+        isPlaying = false;
+        currentStage++;
+        
+        if(currentStage >= 3) {
+            setTimeout(endGame, 2000);
+        } else {
+            startBtn.style.display = 'block';
+            startBtn.textContent = '▶ 다음 단계 시작';
+        }
+    }
+    
+    function endGame() {
+        displayArea.innerHTML = '🏆';
+        msg.textContent = `모든 단계 완료! 총 점수: ${score}/3`;
+        msg.style.color = "#ffeb3b";
+        startBtn.textContent = '🔄 게임 허브로';
+        startBtn.style.display = 'block';
+        startBtn.onclick = goHome; // overwrite default behavior
+        
+        sendScore(6, score, errors); // 6 = Focus Drill
+    }
+    
+    function switchTab(idx) {
+        document.querySelectorAll('.tab').forEach((t, i) => {
+            if(i === idx) t.classList.add('active');
+            else t.classList.remove('active');
+        });
+    }
+
+    function goHome() {
+        if(isPlaying || startBtn.textContent === '🔄 게임 허브로') {
+            window.location.href = 'index.html';
+        } else {
+            window.location.href = 'index.html';
+        }
+    }
+
+    function sendScore(gameType, s, e) {
+        if (window.btcSaveTraining) { var _lbl = '점수 ' + s + '점' + ((typeof e !== 'undefined' && e !== null && e !== '') ? ' · 실수 ' + e + '회' : ''); window.btcSaveTraining(window.btcGameName(gameType), _lbl); }
+    }
+</script>
+  <script src="./btc-bridge.js"></script>
+</body>
+</html>

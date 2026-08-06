@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>똑같은 그림자 찾기 (레벨 1)</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Malgun Gothic', sans-serif; background-color: #f4f7f6; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        .container { text-align: center; max-width: 400px; width: 100%; padding: 20px; box-sizing: border-box; }
+        h1 { font-size: 26px; color: #333; margin-bottom: 5px; }
+        p.desc { font-size: 16px; color: #555; margin-bottom: 20px;}
+        .shadow-area { font-size: 100px; display: flex; justify-content: center; align-items: center; background: #eee; border-radius: 15px; padding: 40px; min-height: 200px; }
+        .shadow-area span { filter: brightness(0); /* 그림자 효과 (검은색) */ }
+        .options-box { margin-top: 30px; display: none; justify-content: space-around; }
+        .option-item { font-size: 60px; padding: 10px; cursor: pointer; border-radius: 10px; transition: transform 0.2s; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 3px solid transparent;}
+        .option-item:active { transform: scale(0.9); }
+        .btn-start { font-size: 24px; padding: 15px 40px; border: none; border-radius: 50px; background-color: #4CAF50; color: white; display: inline-block; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.2);}
+        #feedback { font-size: 20px; font-weight: bold; margin-top: 20px; height: 30px; }
+        .wrong { opacity: 0.3; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>똑같은 그림자 찾기</h1>
+    <p class="desc" id="instruction">위의 검은 그림자와 똑같이 생긴 진짜를 찾아보세요.</p>
+    
+    <div class="shadow-area" id="shadowArea">
+        <button class="btn-start" id="startBtn" onclick="startGame()">시작하기</button>
+    </div>
+
+    <div class="options-box" id="optionsBox">
+    </div>
+
+    <div id="feedback"></div>
+</div>
+
+<script>
+    const puzzles = [
+        { shadow: '🐶', options: ['🐱', '🐶', '🐰'], target: '🐶' },
+        { shadow: '🫖', options: ['🍲', '🫖', '☕'], target: '🫖' },
+        { shadow: '☂️', options: ['🦯', '🧹', '☂️'], target: '☂️' }
+    ];
+
+    let currentPuzzle = 0;
+    let errorCount = 0;
+    
+    const shadowArea = document.getElementById('shadowArea');
+    const optionsBox = document.getElementById('optionsBox');
+    const feedback = document.getElementById('feedback');
+
+    function startGame() {
+        optionsBox.style.display = 'flex';
+        currentPuzzle = 0;
+        showPuzzle();
+    }
+
+    function showPuzzle() {
+        if(currentPuzzle >= puzzles.length) {
+            endGame();
+            return;
+        }
+        feedback.textContent = '';
+        let data = puzzles[currentPuzzle];
+        
+        shadowArea.innerHTML = `<span>${data.shadow}</span>`;
+        
+        optionsBox.innerHTML = '';
+        // Shuffle options for fun, but keeping it simple for now
+        data.options.forEach(opt => {
+            let el = document.createElement('div');
+            el.className = 'option-item';
+            el.innerHTML = opt;
+            el.onclick = () => checkMatch(el, opt, data.target);
+            optionsBox.appendChild(el);
+        });
+    }
+
+    function checkMatch(el, selected, target) {
+        if (selected === target) {
+            el.style.borderColor = "green";
+            feedback.textContent = "정답입니다! 참 잘했어요 👏";
+            feedback.style.color = 'green';
+            currentPuzzle++;
+            setTimeout(showPuzzle, 1500);
+        } else {
+            errorCount++;
+            el.classList.add('wrong');
+            feedback.textContent = "모양이 조금 다르네요. 다른 걸 눌러보세요!";
+            feedback.style.color = '#ff9800';
+            // 부드러운 오답 피드백이므로 재도전 가능
+        }
+    }
+
+    function endGame() {
+        sendScore(3, currentPuzzle, errorCount);
+        shadowArea.innerHTML = '✨';
+        optionsBox.style.display = 'none';
+        feedback.innerHTML = "모든 훈련 완료!<br>오늘의 뇌 건강 팁을 확인해보세요.";
+        feedback.style.color = '#1e88e5';
+        
+        let btn = document.createElement('button');
+        btn.className = 'btn-start';
+        btn.textContent = "블로그 글 읽기 가기";
+        btn.onclick = () => alert('워드프레스 블로그(/blog)로 이동합니다. (현재는 구현 생략)');
+        document.querySelector('.container').appendChild(btn);
+    }
+    function sendScore(gameType, score, errors) {
+        if (window.btcSaveTraining) { var _lbl = '점수 ' + score + '점' + ((typeof errors !== 'undefined' && errors !== null && errors !== '') ? ' · 실수 ' + errors + '회' : ''); window.btcSaveTraining(window.btcGameName(gameType), _lbl); }
+    }
+</script>
+
+  <script src="./btc-bridge.js"></script>
+</body>
+</html>

@@ -18,20 +18,6 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
-      <div className="hidden bg-brand-950 text-brand-100 md:block">
-        <div className="mx-auto flex min-h-[48px] w-full max-w-6xl items-center justify-between gap-4 px-4 text-base">
-          <p className="flex items-center tracking-wide">
-            신경과 교수진이 감수한 노화·치매 예방 인지학습 프로그램{" "}
-            <span className="ml-1 font-semibold text-gold-300">BTC 1% 인지학습</span>
-          </p>
-          <a
-            className="inline-flex items-center font-semibold tracking-wide hover:text-white"
-            href={`tel:${siteConfig.contact.phone}`}
-          >
-            상담 {siteConfig.contact.phone} · 주중 13:00–17:00
-          </a>
-        </div>
-      </div>
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3">
         <Link
           href="/"
@@ -49,7 +35,7 @@ export function SiteHeader() {
           <span className="hidden border-l border-slate-200 pl-3 text-[11px] font-medium leading-4 text-slate-500 xl:block">
             BTC 1% 인지학습
             <br />
-            신경과 교수진 감수
+            치매 전문 교수진 감수
           </span>
         </Link>
 

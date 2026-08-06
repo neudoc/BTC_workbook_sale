@@ -8,8 +8,8 @@ export function SiteFooter() {
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <div className="font-display text-lg font-bold text-white">{siteConfig.name}</div>
-            <p className="mt-1 text-xs font-semibold tracking-wide text-gold-300">
-              BTC 1% 인지학습 · 신경과 교수진 감수 1% 인지학습지
+            <p className="mt-1 text-xs font-semibold tracking-wide text-brand-200">
+              BTC 1% 인지학습 · 치매 전문 교수진 감수 1% 인지학습지
             </p>
             <p className="mt-3 max-w-md leading-7 text-slate-300">
               인지장애와 치매가 걱정되는 가정, 보호자, 기관을 위해

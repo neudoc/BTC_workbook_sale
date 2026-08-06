@@ -38,7 +38,7 @@ export default async function ShopPage() {
     <div className="space-y-10">
       <PageTitle
         title="인지학습 교재 구매"
-        description="신경과 교수진이 감수한 노화·치매 예방 인지학습지입니다. 레벨을 고른 뒤, 봄·여름·가을·겨울 세트를 계절별로 구매할 수 있습니다."
+        description="치매 전문 교수진이 감수한 노화·치매 예방 인지학습지입니다. 레벨을 고른 뒤, 봄·여름·가을·겨울 세트를 계절별로 구매할 수 있습니다."
       />
 
       <div className="rounded-[18px] border border-brand-200 bg-brand-50 p-5">
@@ -63,7 +63,7 @@ export default async function ShopPage() {
 
       {groups.map((group) => (
         <section key={group.category} className="space-y-4">
-          <h2 className="border-l-4 border-gold-400 pl-3 text-xl font-bold text-slate-950">
+          <h2 className="border-l-4 border-brand-600 pl-3 text-xl font-bold text-slate-950">
             {group.category}
           </h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

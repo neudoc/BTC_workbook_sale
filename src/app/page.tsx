@@ -61,70 +61,59 @@ const partners = [
 export default function HomePage() {
   return (
     <div className="space-y-20">
-      <section className="grid items-center gap-12 pt-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
-        <div>
-          <p className="flex items-center gap-3 text-lg font-bold tracking-[0.18em] text-gold-700">
-            <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
-            BTC 1% 인지학습
-          </p>
-          <h1 className="mt-5 break-words tracking-tight text-slate-950">
-            <span className="block font-sans text-[1.05rem] font-bold leading-[1.5] text-slate-800 sm:text-[1.3rem] lg:text-[1.45rem]">
-              치매를 전문으로 하는 신경과 교수진이 검토합니다.
+      <section className="-mx-4 -mt-8 bg-gradient-to-b from-brand-50 via-brand-50/40 to-white px-4 pb-16 pt-14 sm:pb-20 sm:pt-20">
+        <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
+          <div>
+            <span className="inline-flex items-center rounded-full bg-brand-800 px-5 py-2 text-sm font-bold tracking-[0.08em] text-white sm:text-base">
+              BTC 1% 인지학습
             </span>
-            <span className="mt-3 block text-[1.6rem] font-bold leading-[1.24] text-brand-800 sm:text-[2.4rem] lg:text-[2.7rem]">
-              노화·치매 예방
+            <h1 className="mt-6 break-keep font-sans text-[2rem] font-bold leading-[1.25] tracking-tight text-slate-950 sm:text-[2.8rem] lg:text-[3.1rem]">
+              치매를 전문으로 하는
               <br />
-              1% 인지학습지
-            </span>
-          </h1>
-          <p className="mt-7 max-w-xl text-base leading-8 text-slate-700 sm:text-lg sm:leading-9">
-            인지 수준에 따라 예방·관리·돌봄 3단계로 나뉘고, 표준 인지평가 도구로
-            시작 전후를 확인합니다.
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/shop"
-              className="inline-flex items-center justify-center rounded-full bg-brand-700 px-7 py-3.5 text-base font-bold text-white shadow-sm transition hover:bg-brand-800"
-            >
-              교재 보러가기
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-full border border-slate-300 px-7 py-3.5 text-base font-bold text-slate-800 transition hover:border-brand-600 hover:text-brand-800"
-            >
-              지도사 문의
-            </Link>
-          </div>
-          <dl className="mt-9 grid grid-cols-3 gap-3 border-t border-slate-200 pt-5">
-            <div>
-              <dt className="text-xs font-semibold text-slate-500">전체 구성</dt>
-              <dd className="mt-1 text-sm font-bold text-slate-950 sm:text-base">12권 · 4계절</dd>
-            </div>
-            <div>
-              <dt className="text-xs font-semibold text-slate-500">단계</dt>
-              <dd className="mt-1 text-sm font-bold text-slate-950 sm:text-base">예방·관리·돌봄</dd>
-            </div>
-            <div>
-              <dt className="text-xs font-semibold text-slate-500">감수</dt>
-              <dd className="mt-1 text-sm font-bold text-slate-950 sm:text-base">신경과 교수진</dd>
-            </div>
-          </dl>
-        </div>
-
-        <div className="relative overflow-hidden rounded-[18px] border border-slate-200 bg-slate-100">
-          <Image
-            src="/images/home/products.jpg"
-            alt="인지학습 교재와 교구"
-            width={680}
-            height={520}
-            priority
-            className="aspect-[4/3] h-full w-full object-cover"
-          />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/85 to-transparent p-5 text-white">
-            <p className="text-sm font-semibold">수준별 교재와 실전 지도서</p>
-            <p className="mt-1 text-xs leading-5 text-slate-200">
-              보호자, 센터, 지도사가 같은 흐름으로 사용할 수 있는 프로그램형 자료
+              교수진이 검토합니다.
+            </h1>
+            <p className="mt-6 max-w-lg break-keep text-base leading-8 text-slate-600 sm:text-lg">
+              임상적 전문성과 공감의 돌봄을 결합한 브레인트러스트 클럽의 인지 중재
+              프로그램. 뇌 건강의 새로운 기준을 제시합니다.
             </p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/shop"
+                className="group inline-flex items-center justify-center gap-2 rounded-[10px] bg-brand-800 px-7 py-4 text-base font-bold text-white transition hover:bg-brand-900"
+              >
+                교재 보러가기
+                <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>
+                  →
+                </span>
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-[10px] border border-brand-200 bg-white px-7 py-4 text-base font-bold text-slate-800 transition hover:border-brand-400 hover:text-brand-800"
+              >
+                지도사 문의
+              </Link>
+            </div>
+            <p className="mt-6 text-base text-slate-600">
+              상담{" "}
+              <a
+                href={`tel:${siteConfig.contact.phone}`}
+                className="font-bold text-brand-800 hover:underline"
+              >
+                {siteConfig.contact.phone}
+              </a>{" "}
+              · 주중 13:00–17:00
+            </p>
+          </div>
+
+          <div className="overflow-hidden rounded-[18px] shadow-lg">
+            <Image
+              src="/images/home/products.jpg"
+              alt="인지학습 교재와 학습교구"
+              width={720}
+              height={520}
+              priority
+              className="aspect-[4/3] h-full w-full object-cover"
+            />
           </div>
         </div>
       </section>
@@ -132,16 +121,14 @@ export default function HomePage() {
       <section>
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <p className="flex items-center gap-3 text-base font-bold tracking-[0.18em] text-gold-700">
-              <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
+            <span className="inline-flex items-center rounded-full bg-brand-100 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-brand-800">
               단계별 맞춤 인지훈련
-            </p>
+            </span>
             <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
               인지 상태에 맞는 레벨을 선택하세요
             </h2>
-            <p className="mt-3 max-w-2xl leading-7 text-slate-700">
-              레벨 1 예방(정상군), 레벨 2 관리(경도인지장애), 레벨 3 돌봄(중증도).
-              각 레벨은 봄·여름·가을·겨울 4세트, 총 12권으로 구성됩니다.
+            <p className="mt-3 max-w-xl break-keep leading-7 text-slate-600">
+              예방 · 관리 · 돌봄 3단계. 각 레벨은 4계절 12권입니다.
             </p>
           </div>
           <Link
@@ -194,17 +181,15 @@ export default function HomePage() {
 
       <section className="grid gap-8 rounded-[18px] bg-brand-950 p-6 text-white sm:p-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
-          <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-300">
-            <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
+          <span className="inline-flex items-center rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-brand-100">
             SOCIAL IMPACT
-          </p>
+          </span>
           <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
             교재를 판매하는 것을 넘어, 사회적 기여를 함께 만듭니다
           </h2>
-          <p className="mt-4 leading-8 text-brand-50">
-            인지건강은 개인의 문제가 아니라 가족과 지역사회가 함께 돌봐야 할
-            영역입니다. BrainTrust Club은 실용적인 교재와 교육을 통해 돌봄
-            현장의 부담을 낮추고 지속 가능한 학습 문화를 넓혀갑니다.
+          <p className="mt-4 break-keep leading-8 text-brand-50">
+            인지건강은 가족과 지역사회가 함께 돌봐야 할 영역입니다. 돌봄 현장의
+            부담을 낮추는 교재와 교육을 만듭니다.
           </p>
         </div>
         <ul className="grid gap-3">
@@ -227,17 +212,14 @@ export default function HomePage() {
           />
         </div>
         <div>
-          <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-700">
-            <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
+          <span className="inline-flex items-center rounded-full bg-brand-100 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-brand-800">
             INSTRUCTOR
-          </p>
+          </span>
           <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
             인지학습지도사 선생님을 모집합니다
           </h2>
-          <p className="mt-4 leading-8 text-slate-700">
-            교재와 지도서를 활용해 어르신, 보호자, 기관 프로그램을 이끌
-            선생님을 기다립니다. 교육 수료 후 지역사회 현장에서 인지학습
-            프로그램을 운영할 수 있도록 자료와 상담을 지원합니다.
+          <p className="mt-4 break-keep leading-8 text-slate-600">
+            수료 후 현장에서 바로 운영할 수 있도록 자료와 상담을 지원합니다.
           </p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -258,15 +240,14 @@ export default function HomePage() {
 
       <section className="grid gap-5 rounded-[18px] border border-slate-200 bg-white p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
         <div>
-          <p className="flex items-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-700">
-            <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
+          <span className="inline-flex items-center rounded-full bg-brand-100 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-brand-800">
             BLOG
-          </p>
-          <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">
-            인지장애와 치매 관련 정보는 블로그에서 더 자세히 확인하세요
+          </span>
+          <h2 className="mt-2 break-keep text-2xl font-bold tracking-tight text-slate-950">
+            뇌 건강 정보를 블로그에서 확인하세요
           </h2>
-          <p className="mt-3 leading-7 text-slate-700">
-            보호자 교육, 치매 예방, 일상 속 인지활동 자료를 꾸준히 제공합니다.
+          <p className="mt-3 break-keep leading-7 text-slate-600">
+            보호자 교육, 치매 예방, 일상 인지활동 자료를 꾸준히 올립니다.
           </p>
         </div>
         <a
@@ -280,12 +261,11 @@ export default function HomePage() {
       </section>
 
       <section className="pb-6 text-center">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
-          교재 구매, 기관 도입, 지도사 문의를 한 번에 상담해 드립니다
+        <h2 className="break-keep text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+          무엇부터 시작할지 함께 정해 드립니다
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl leading-8 text-slate-700">
-          필요한 대상, 운영 환경, 희망 교육 형태를 알려주시면 적합한 교재와
-          프로그램 방향을 안내하겠습니다.
+        <p className="mx-auto mt-4 max-w-xl break-keep leading-8 text-slate-600">
+          교재 구매, 기관 도입, 지도사 과정 — 목적을 알려주시면 안내해 드립니다.
         </p>
         <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
           <Link
@@ -304,11 +284,9 @@ export default function HomePage() {
       </section>
 
       <section className="border-t border-slate-200 pt-10">
-        <p className="flex items-center justify-center gap-3 text-sm font-bold tracking-[0.18em] text-gold-700">
-          <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
-          PARTNERS
-          <span className="inline-block h-px w-8 bg-gold-400" aria-hidden />
-        </p>
+        <div className="text-center">
+          <span className="inline-flex items-center rounded-full bg-brand-100 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-brand-800">PARTNERS</span>
+        </div>
         <h2 className="mt-2 text-center text-2xl font-bold tracking-tight text-slate-950">
           함께하는 협력기관
         </h2>

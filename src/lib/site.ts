@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: "BrainTrust Club",
   programName: "BTC 1% 인지학습",
-  tagline: "신경과 교수진 감수 1% 인지학습지",
+  tagline: "치매 전문 교수진 감수 1% 인지학습지",
   description:
-    "신경과 교수진이 감수하고 표준 인지평가로 확인하는 노화·치매 예방 인지학습 프로그램 'BTC 1% 인지학습'. 가정과 기관을 위한 단계별 교재, 지도사 지침서, 교육 과정을 제공합니다.",
+    "치매 전문 교수진이 감수하고 표준 인지평가로 확인하는 노화·치매 예방 인지학습 프로그램 'BTC 1% 인지학습'. 가정과 기관을 위한 단계별 교재, 지도사 지침서, 교육 과정을 제공합니다.",
   siteUrl: "https://braintrustclub.net",
   blogUrl: "https://neudoc.tistory.com/",
   shopUrl: "https://btc1pro.cafe24.com",
